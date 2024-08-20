@@ -59,3 +59,18 @@ npm run test:e2e
 ```sh
 npm run lint
 ```
+
+```
+✔ Project name: 'meet-tracker'
+✔ Current directory is not empty. Remove existing files and continue? … Yes
+✔ Package name: … vue-meet-tracker
+✔ Add TypeScript? … Yes
+✔ Add JSX Support? … Yes
+✔ Add Vue Router for Single Page Application development? … Yes
+✔ Add Pinia for state management? … Yes
+✔ Add Vitest for Unit Testing? … Yes
+✔ Add an End-to-End Testing Solution? › Cypress
+✔ Add ESLint for code quality? … Yes
+✔ Add Prettier for code formatting? … Yes
+✔ Add Vue DevTools 7 extension for debugging? (experimental) … Yes
+```
