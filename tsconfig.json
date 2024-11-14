@@ -27,9 +27,6 @@
     "lib": [
       "esnext",
       "dom"
-    ],
-    "types": [
-      "webpack-env"
     ]
   },
   "include": [
