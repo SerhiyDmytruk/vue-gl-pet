@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
-import Ball from '@/components/jelly-simple/ball.js'
-import Mouse from '@/components/jelly-simple/mouse.js'
+import Ball from '@/assets/jelly-simple/ball'
+import Mouse from '@/assets/jelly-simple/mouse'
 
 const canvas = ref<HTMLCanvasElement | null>(null)
 let ctx: CanvasRenderingContext2D | null = null
@@ -61,10 +61,16 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <canvas ref="canvas" id="drawOnMe" width="600" height="600"></canvas>
+  <div>
+    <div>
+      <p>This code example is to try to implement the code in vue and understand how it works</p>
+      <a href="https://www.youtube.com/live/XqB_Ulfpd0w?feature=shared" target="_blank">
+        original link
+      </a>
+    </div>
 
-  <p>my work it is try to realise code in the vue and understand how it work</p>
-  <a href="https://www.youtube.com/live/XqB_Ulfpd0w?feature=shared"> original link </a>
+    <canvas ref="canvas" id="drawOnMe" width="600" height="600"></canvas>
+  </div>
 </template>
 
 <style scoped>

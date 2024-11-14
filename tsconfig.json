@@ -17,6 +17,27 @@
         "./src/*" // set path `@/*` as alias of `src/*`
       ]
     },
-    "module": "NodeNext"
-  }
+    "module": "NodeNext",
+    "target": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "types": [
+      "webpack-env"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.vue"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
