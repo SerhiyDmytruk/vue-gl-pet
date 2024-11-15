@@ -9,7 +9,8 @@ import { RouterLink, RouterView } from 'vue-router'
     <div class="wrapper">
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/jelly-simple">Jelly Simple Example</RouterLink>
+        <RouterLink to="/jelly-simple-obj">Jelly WebGl Obj</RouterLink>
+        <RouterLink to="/jelly-simple-img">Text Animation</RouterLink>
       </nav>
     </div>
   </header>
@@ -33,10 +34,14 @@ nav {
   font-size: 12px;
   text-align: center;
   margin-top: 2rem;
+  display: flex;
+  flex-flow: column wrap;
+  text-wrap: nowrap;
 }
 
 nav a.router-link-exact-active {
   color: var(--color-text);
+  text-decoration: underline;
 }
 
 nav a.router-link-exact-active:hover {
@@ -58,6 +63,8 @@ nav a:first-of-type {
     display: flex;
     place-items: center;
     padding-right: calc(var(--section-gap) / 4);
+    position: sticky;
+    top: 0;
   }
 
   .logo {

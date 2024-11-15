@@ -61,7 +61,7 @@ npm run lint
 ```
 
 ```
-✔ Project name: 'meet-tracker'
+✔ Project name: 'VueGl-petProjects'
 ✔ Current directory is not empty. Remove existing files and continue? … Yes
 ✔ Package name: … vue-meet-tracker
 ✔ Add TypeScript? … Yes
@@ -74,3 +74,7 @@ npm run lint
 ✔ Add Prettier for code formatting? … Yes
 ✔ Add Vue DevTools 7 extension for debugging? (experimental) … Yes
 ```
+
+### Inspired on youtube by Yuri Artiukh
+
+https://youtube.com/playlist?list=PLswdBLT9llbjS2o4xreJqgBRjTmkEz6sv&feature=shared

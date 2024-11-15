@@ -63,6 +63,7 @@ onUnmounted(() => {
 <template>
   <div>
     <div>
+      <h1>Jelly Object Animation</h1>
       <p>This code example is to try to implement the code in vue and understand how it works</p>
       <a href="https://www.youtube.com/live/XqB_Ulfpd0w?feature=shared" target="_blank">
         original link
@@ -72,21 +73,3 @@ onUnmounted(() => {
     <canvas ref="canvas" id="drawOnMe" width="600" height="600"></canvas>
   </div>
 </template>
-
-<style scoped>
-@media (min-width: 1024px) {
-  .main {
-    min-height: 100vh;
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: center;
-    align-items: center;
-  }
-}
-
-canvas {
-  display: block;
-  margin: 0 auto;
-  border: 1px solid #333;
-}
-</style>

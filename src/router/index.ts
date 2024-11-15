@@ -10,12 +10,17 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/jelly-simple',
-      name: 'jelly-simple',
+      path: '/jelly-simple-obj',
+      name: 'jelly-simple-obj',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/JellySimpleAnimationView.vue')
+      component: () => import('../views/JellyObjWebGlView.vue')
+    },
+    {
+      path: '/jelly-simple-img',
+      name: 'jelly-simple-img',
+      component: () => import('../views/TextAnimationView.vue')
     }
   ]
 })
