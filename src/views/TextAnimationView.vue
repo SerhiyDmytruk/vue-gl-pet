@@ -7,13 +7,13 @@ const skewStyle = reactive({
 })
 
 var checkScrollSpeed = (function (settings) {
-  settings = settings || {}
+  settings = settings! || {}
 
-  var lastPos,
-    newPos,
-    timer,
-    delta,
-    delay = settings.delay || 50 // in "ms" (higher means lower fidelity )
+  let lastPos: null | number,
+    newPos: number,
+    timer: any,
+    delta: number,
+    delay = settings?.delay || 50 // in "ms" (higher means lower fidelity )
 
   function clear() {
     lastPos = null
