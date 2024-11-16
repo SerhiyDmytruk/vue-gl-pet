@@ -26,6 +26,11 @@ const router = createRouter({
       path: '/webgl-triangle',
       name: 'webgl-triangle',
       component: () => import('../views/WebGlTriangleView.vue')
+    },
+    {
+      path: '/threejs-triangle',
+      name: 'threejs-triangle',
+      component: () => import('../views/ThreeTriangleView.vue')
     }
   ]
 })

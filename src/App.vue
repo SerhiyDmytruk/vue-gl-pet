@@ -12,6 +12,7 @@ import { RouterLink, RouterView } from 'vue-router'
         <RouterLink to="/jelly-simple-obj">Jelly WebGl Obj</RouterLink>
         <RouterLink to="/jelly-simple-img">Text Animation</RouterLink>
         <RouterLink to="/webgl-triangle">WebGl 1 (pure) - Triangle</RouterLink>
+        <RouterLink to="/threejs-triangle">ThreeJs 1 (pure) - Triangle</RouterLink>
       </nav>
     </div>
   </header>
