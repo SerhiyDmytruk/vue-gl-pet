@@ -21,6 +21,11 @@ const router = createRouter({
       path: '/jelly-simple-img',
       name: 'jelly-simple-img',
       component: () => import('../views/TextAnimationView.vue')
+    },
+    {
+      path: '/webgl-triangle',
+      name: 'webgl-triangle',
+      component: () => import('../views/WebGlTriangleView.vue')
     }
   ]
 })

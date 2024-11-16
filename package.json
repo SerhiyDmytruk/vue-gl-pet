@@ -21,6 +21,7 @@
     "core-js": "^3.39.0",
     "pinia": "^2.1.7",
     "three": "^0.170.0",
+    "three-orbit-controls": "^82.1.0",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"
   },

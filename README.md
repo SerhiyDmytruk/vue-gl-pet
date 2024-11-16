@@ -75,6 +75,7 @@ npm run lint
 ✔ Add Vue DevTools 7 extension for debugging? (experimental) … Yes
 ```
 
-### Inspired on youtube by Yuri Artiukh
+### Inspired on youtube by different artists
 
-https://youtube.com/playlist?list=PLswdBLT9llbjS2o4xreJqgBRjTmkEz6sv&feature=shared
+- [Yuri Artiukh's videos](https://youtube.com/playlist?list=PLswdBLT9llbjS2o4xreJqgBRjTmkEz6sv&feature=shared)
+- [Indigo Code's videos](https://youtu.be/kB0ZVUrI4Aw?feature=shared)
