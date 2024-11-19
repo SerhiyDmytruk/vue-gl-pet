@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
-import * as THREE from 'three'
+import { onMounted, ref } from 'vue'
 
 const canvas = ref<HTMLCanvasElement | null>(null)
 let gl: WebGLRenderingContext | null = null
@@ -29,7 +28,7 @@ var fragmentShaderText = [
   '}'
 ].join('\n')
 
-function createShader(gl: WebGLRenderingContext, type, source) {
+function createShader(gl: WebGLRenderingContext, type: any, source: any) {
   var shader = gl.createShader(type)
   gl.shaderSource(shader, source)
   gl.compileShader(shader)
@@ -48,7 +47,7 @@ function createShader(gl: WebGLRenderingContext, type, source) {
   gl.deleteShader(shader)
 }
 
-function createProgram(gl, vertexShader, fragmentShader) {
+function createProgram(gl, vertexShader: any, fragmentShader: any) {
   var program = gl.createProgram()
   gl.attachShader(program, vertexShader)
   gl.attachShader(program, fragmentShader)
@@ -79,8 +78,8 @@ onMounted(() => {
     // Create shaders
     //
 
-    const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderText)
-    const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderText)
+    const vertexShader = createShader(gl, gl?.VERTEX_SHADER, vertexShaderText)
+    const fragmentShader = createShader(gl, gl?.FRAGMENT_SHADER, fragmentShaderText)
     const program = createProgram(gl, vertexShader, fragmentShader)
 
     //
@@ -88,7 +87,7 @@ onMounted(() => {
     //
 
     // prettier-ignore
-    const triangleVertices = 
+    const triangleVertices =
     [ // X, Y,       R, G, B
       0.0, 0.5,    1.0, 1.0, 0.0,
       -0.5, -0.5,  0.7, 0.0, 1.0,
