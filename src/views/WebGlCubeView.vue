@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue'
 import { glMatrix, mat4 } from 'gl-matrix'
 
 const canvas = ref<HTMLCanvasElement | null>(null)
-let gl: WebGLRenderingContext | null = null
+var gl: WebGLRenderingContext | null = null
 
 var vertexShaderText = [
   'precision mediump float;',
@@ -36,7 +36,7 @@ var fragmentShaderText = [
   '}'
 ].join('\n')
 
-function createShader(gl: WebGLRenderingContext, type, source) {
+function createShader(gl: WebGLRenderingContext, type: number, source: string) {
   var shader = gl.createShader(type)
   gl.shaderSource(shader, source)
   gl.compileShader(shader)
@@ -55,7 +55,7 @@ function createShader(gl: WebGLRenderingContext, type, source) {
   gl.deleteShader(shader)
 }
 
-function createProgram(gl: WebGLRenderingContext, vertexShader, fragmentShader) {
+function createProgram(gl: WebGLRenderingContext, vertexShader: object, fragmentShader: object) {
   var program = gl.createProgram()
   gl.attachShader(program, vertexShader)
   gl.attachShader(program, fragmentShader)
@@ -92,14 +92,14 @@ onMounted(() => {
 
     const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderText)
     const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderText)
-    const program = createProgram(gl, vertexShader, fragmentShader)
+    const program: WebGLProgram | null = createProgram(gl, vertexShader, fragmentShader)
 
     //
     // Create buffer
     //
 
     // prettier-ignore
-    var boxVertices = 
+    var boxVertices =
     [ // X, Y, Z           R, G, B
         // Top
         -1.0, 1.0, -1.0,   0.5, 0.5, 0.5,
@@ -166,16 +166,23 @@ onMounted(() => {
         22, 20, 23
     ];
 
-    const boxVertexBufferObject = gl?.createBuffer()
-    gl?.bindBuffer(gl.ARRAY_BUFFER, boxVertexBufferObject)
+    const boxVertexBufferObject: WebGLBuffer | undefined = gl?.createBuffer()
+
+    if (boxVertexBufferObject) {
+      gl?.bindBuffer(gl.ARRAY_BUFFER, boxVertexBufferObject)
+    }
     gl?.bufferData(gl.ARRAY_BUFFER, new Float32Array(boxVertices), gl.STATIC_DRAW)
 
-    const boxIndexBufferObject = gl?.createBuffer()
-    gl?.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, boxIndexBufferObject)
+    const boxIndexBufferObject: WebGLBuffer | undefined = gl?.createBuffer()
+
+    if (boxIndexBufferObject) {
+      gl?.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, boxIndexBufferObject)
+    }
+
     gl?.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(boxIndices), gl?.STATIC_DRAW)
 
-    const positionAttribLocation = gl?.getAttribLocation(program, 'vertPosition')
-    const colorAttribLocation = gl?.getAttribLocation(program, 'vertColor')
+    let positionAttribLocation: number = gl?.getAttribLocation(program, 'vertPosition')
+    let colorAttribLocation: number = gl?.getAttribLocation(program, 'vertColor')
 
     gl?.vertexAttribPointer(
       positionAttribLocation, // Attribute location
@@ -202,7 +209,7 @@ onMounted(() => {
     //
 
     // Tell OpenGl state machine which program should be active
-    gl?.useProgram(program)
+    gl?.useProgram(program) // Safe because `undefined` is excluded
 
     var matWorldUniformLocation = gl?.getUniformLocation(program, 'mWorld')
     var matViewUniformLocation = gl?.getUniformLocation(program, 'mView')
