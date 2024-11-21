@@ -41,6 +41,11 @@ const router = createRouter({
       path: '/webgl-cube',
       name: 'webgl-cube',
       component: () => import('../views/WebGlCubeView.vue')
+    },
+    {
+      path: '/webgl-cube-texture',
+      name: 'webgl-cube-texture',
+      component: () => import('../views/WebGlCubeTextureView.vue')
     }
   ]
 })

@@ -15,10 +15,10 @@ import { RouterLink, RouterView } from 'vue-router'
         <RouterLink to="/threejs-triangle">ThreeJs 1 (pure) - Triangle</RouterLink>
         <RouterLink to="/webgl-2-triangle">WebGl 2 (pure) - Triangle</RouterLink>
         <RouterLink to="/webgl-cube">WebGl 2 (pure) - Cube</RouterLink>
+        <RouterLink to="/webgl-cube-texture">WebGl 2 (pure) - Textured Cube</RouterLink>
       </nav>
     </div>
   </header>
 
   <RouterView />
 </template>
-

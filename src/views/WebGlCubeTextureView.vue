@@ -5,19 +5,21 @@ import { glMatrix, mat4 } from 'gl-matrix'
 const canvas = ref<HTMLCanvasElement | null>(null)
 var gl: WebGLRenderingContext | null = null
 
+const textureImg = ref<HTMLImageElement | null>(null)
+
 var vertexShaderText = [
   'precision mediump float;',
   '',
   'attribute vec3 vertPosition;',
-  'attribute vec3 vertColor;',
-  'varying vec3 fragColor;',
+  'attribute vec2 vertTexCoord;',
+  'varying vec2 fragTexCoord;',
   'uniform mat4 mWorld;',
   'uniform mat4 mView;',
   'uniform mat4 mProj;',
   '',
   'void main()',
   '{',
-  '  fragColor = vertColor;',
+  '  fragTexCoord = vertTexCoord;',
   '  gl_Position = mProj * mView * mWorld * vec4(vertPosition, 1.0);',
   '}'
 ].join('\n')
@@ -29,10 +31,12 @@ var vertexShaderText = [
 var fragmentShaderText = [
   'precision mediump float;',
   '',
-  'varying vec3 fragColor;',
+  'varying vec2 fragTexCoord;',
+  'uniform sampler2D sampler;',
+  '',
   'void main()',
   '{',
-  '  gl_FragColor = vec4(fragColor, 1.0);',
+  '  gl_FragColor = texture2D(sampler, fragTexCoord);',
   '}'
 ].join('\n')
 
@@ -76,7 +80,7 @@ function createProgram(gl: WebGLRenderingContext, vertexShader: object, fragment
 }
 
 onMounted(() => {
-  if (canvas.value) {
+  if (canvas.value || textureImg.value) {
     gl = canvas.value.getContext('webgl')
 
     gl?.clearColor(0.75, 0.85, 0.8, 1.0)
@@ -100,42 +104,42 @@ onMounted(() => {
 
     // prettier-ignore
     var boxVertices =
-    [ // X, Y, Z           R, G, B
-        // Top
-        -1.0, 1.0, -1.0,   0.5, 0.5, 0.5,
-        -1.0, 1.0, 1.0,    0.5, 0.5, 0.5,
-        1.0, 1.0, 1.0,     0.5, 0.5, 0.5,
-        1.0, 1.0, -1.0,    0.5, 0.5, 0.5,
+    [ // X, Y, Z           U,V
+      // Top
+      -1.0, 1.0, -1.0,   0, 0,
+      -1.0, 1.0, 1.0,    0, 1,
+      1.0, 1.0, 1.0,     1, 1,
+      1.0, 1.0, -1.0,    1, 0,
 
-        // Left
-        -1.0, 1.0, 1.0,    0.75, 0.25, 0.5,
-        -1.0, -1.0, 1.0,   0.75, 0.25, 0.5,
-        -1.0, -1.0, -1.0,  0.75, 0.25, 0.5,
-        -1.0, 1.0, -1.0,   0.75, 0.25, 0.5,
+      // Left
+      -1.0, 1.0, 1.0,    0, 0,
+      -1.0, -1.0, 1.0,   1, 0,
+      -1.0, -1.0, -1.0,  1, 1,
+      -1.0, 1.0, -1.0,   0, 1,
 
-        // Right
-        1.0, 1.0, 1.0,    0.25, 0.25, 0.75,
-        1.0, -1.0, 1.0,   0.25, 0.25, 0.75,
-        1.0, -1.0, -1.0,  0.25, 0.25, 0.75,
-        1.0, 1.0, -1.0,   0.25, 0.25, 0.75,
+      // Right
+      1.0, 1.0, 1.0,    1, 1,
+      1.0, -1.0, 1.0,   0, 1,
+      1.0, -1.0, -1.0,  0, 0,
+      1.0, 1.0, -1.0,   1, 0,
 
-        // Front
-        1.0, 1.0, 1.0,    1.0, 0.0, 0.15,
-        1.0, -1.0, 1.0,    1.0, 0.0, 0.15,
-        -1.0, -1.0, 1.0,    1.0, 0.0, 0.15,
-        -1.0, 1.0, 1.0,    1.0, 0.0, 0.15,
+      // Front
+      1.0, 1.0, 1.0,    1, 1,
+      1.0, -1.0, 1.0,    1, 0,
+      -1.0, -1.0, 1.0,    0, 0,
+      -1.0, 1.0, 1.0,    0, 1,
 
-        // Back
-        1.0, 1.0, -1.0,    0.0, 1.0, 0.15,
-        1.0, -1.0, -1.0,    0.0, 1.0, 0.15,
-        -1.0, -1.0, -1.0,    0.0, 1.0, 0.15,
-        -1.0, 1.0, -1.0,    0.0, 1.0, 0.15,
+      // Back
+      1.0, 1.0, -1.0,    0, 0,
+      1.0, -1.0, -1.0,    0, 1,
+      -1.0, -1.0, -1.0,    1, 1,
+      -1.0, 1.0, -1.0,    1, 0,
 
-        // Bottom
-        -1.0, -1.0, -1.0,   0.5, 0.5, 1.0,
-        -1.0, -1.0, 1.0,    0.5, 0.5, 1.0,
-        1.0, -1.0, 1.0,     0.5, 0.5, 1.0,
-        1.0, -1.0, -1.0,    0.5, 0.5, 1.0,
+      // Bottom
+      -1.0, -1.0, -1.0,   1, 1,
+      -1.0, -1.0, 1.0,    1, 0,
+      1.0, -1.0, 1.0,     0, 0,
+      1.0, -1.0, -1.0,    0, 1,
     ];
 
     // prettier-ignore
@@ -182,27 +186,48 @@ onMounted(() => {
     gl?.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(boxIndices), gl?.STATIC_DRAW)
 
     let positionAttribLocation: number = gl?.getAttribLocation(program, 'vertPosition')
-    let colorAttribLocation: number = gl?.getAttribLocation(program, 'vertColor')
+    let texCoordAttribLocation: number = gl?.getAttribLocation(program, 'vertTexCoord')
 
-    gl?.vertexAttribPointer(
+    gl.vertexAttribPointer(
       positionAttribLocation, // Attribute location
       3, // Number of elements per attribute
       gl.FLOAT, // Type of elements
       gl.FALSE,
-      6 * Float32Array.BYTES_PER_ELEMENT, // Size of an individual vertex
+      5 * Float32Array.BYTES_PER_ELEMENT, // Size of an individual vertex
       0 // Offset from the beginning of a single vertex to this attribute
     )
-    gl?.vertexAttribPointer(
-      colorAttribLocation, // Attribute location
-      3, // Number of elements per attribute
+    gl.vertexAttribPointer(
+      texCoordAttribLocation, // Attribute location
+      2, // Number of elements per attribute
       gl.FLOAT, // Type of elements
       gl.FALSE,
-      6 * Float32Array.BYTES_PER_ELEMENT, // Size of an individual vertex
+      5 * Float32Array.BYTES_PER_ELEMENT, // Size of an individual vertex
       3 * Float32Array.BYTES_PER_ELEMENT // Offset from the beginning of a single vertex to this attribute
     )
 
     gl?.enableVertexAttribArray(positionAttribLocation)
-    gl?.enableVertexAttribArray(colorAttribLocation)
+    gl?.enableVertexAttribArray(texCoordAttribLocation)
+
+    //
+    //  Create texture
+    //
+    var boxTexture = gl.createTexture()
+
+    // Wait until the image is loaded
+
+    textureImg.value.onload = () => {
+      // Set texture parameters
+      gl.bindTexture(gl.TEXTURE_2D, boxTexture)
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, textureImg.value)
+
+      console.log('Texture successfully loaded and applied')
+    }
+
+    gl.bindTexture(gl.TEXTURE_2D, null)
 
     // Tell OpenGl state machine which program should be active
     gl?.useProgram(program) // Safe because `undefined` is excluded
@@ -239,6 +264,7 @@ onMounted(() => {
     //
     // Main render loop
     //
+
     var loop = function () {
       angle = (performance.now() / 1000 / 6) * 2 * Math.PI
       mat4.rotate(yRotationMatrix, indentityMatrix, angle, [0, 1, 0])
@@ -249,6 +275,10 @@ onMounted(() => {
 
       gl?.clearColor(0.75, 0.85, 0.8, 1.0)
       gl?.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT)
+
+      gl?.bindTexture(gl.TEXTURE_2D, boxTexture)
+      gl?.activeTexture(gl.TEXTURE0)
+
       gl?.drawElements(gl.TRIANGLES, boxIndices.length, gl.UNSIGNED_SHORT, 0)
 
       requestAnimationFrame(loop)
@@ -262,11 +292,18 @@ onMounted(() => {
 <template>
   <div>
     <div>
-      <h1>Simple Cube 3D cated by pure WebGl</h1>
+      <h1>Simple Textured Cube 3D by pure WebGl</h1>
     </div>
 
     <canvas ref="canvas" id="drawOnMe" width="600" height="600">
       Your browser does not support HTML5
     </canvas>
+
+    <img
+      ref="textureImg"
+      src="@/assets/box-texture.jpg"
+      alt="Texture metal box"
+      style="display: none"
+    />
   </div>
 </template>
