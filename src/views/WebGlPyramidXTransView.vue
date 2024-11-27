@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, reactive } from 'vue'
 import { mat4, glMatrix } from 'gl-matrix'
+import { log } from 'console'
 
 const canvas = ref<HTMLCanvasElement | null>(null)
+
+let typeAxis = reactive({ axisX: true })
 
 // Vertex Shader
 const vertexShaderSource = `
@@ -119,8 +122,12 @@ onMounted(() => {
   const render = () => {
     angle += 0.01
     mat4.identity(transformMatrix)
-    mat4.rotateY(transformMatrix, transformMatrix, angle) // Rotate around Y-axis
-    // mat4.rotateX(transformMatrix, transformMatrix, angle / 2) // Rotate around X-axis
+
+    if (typeAxis.axisX) {
+      mat4.rotateX(transformMatrix, transformMatrix, angle / 2) // Rotate around X-axis
+    } else {
+      mat4.rotateY(transformMatrix, transformMatrix, angle) // Rotate around Y-axis
+    }
 
     gl.uniformMatrix4fv(transformLocation, false, transformMatrix)
 
@@ -134,6 +141,14 @@ onMounted(() => {
   }
 
   render()
+
+  function handleClick(e: MouseEvent, gl) {
+    if (!canvas.value) return
+
+    typeAxis.axisX = !typeAxis.axisX
+  }
+
+  canvas.value?.addEventListener('click', handleClick)
 })
 </script>
 
