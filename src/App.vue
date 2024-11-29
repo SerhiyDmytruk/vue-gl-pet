@@ -17,6 +17,7 @@ import { RouterLink, RouterView } from 'vue-router'
         <RouterLink to="/webgl-cube">WebGl #2 - Cube</RouterLink>
         <RouterLink to="/webgl-cube-texture">WebGl #2 - Textured Cube</RouterLink>
         <RouterLink to="/webgl-pyramid-x-trans">WebGl #2 - Pyramid 'x-transiiton'</RouterLink>
+        <RouterLink to="/jelly-simple-svg">Jelly WebGl SVG</RouterLink>
       </nav>
     </div>
   </header>

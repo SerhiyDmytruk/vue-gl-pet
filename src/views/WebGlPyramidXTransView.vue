@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref, reactive } from 'vue'
 import { mat4, glMatrix } from 'gl-matrix'
-import { log } from 'console'
 
 const canvas = ref<HTMLCanvasElement | null>(null)
 
@@ -131,7 +130,7 @@ onMounted(() => {
 
     gl.uniformMatrix4fv(transformLocation, false, transformMatrix)
 
-    gl.clearColor(0.0, 0.0, 0.0, 1.0)
+    gl?.clearColor(0.75, 0.85, 0.8, 1.0)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     gl.enable(gl.DEPTH_TEST)
 
@@ -142,7 +141,7 @@ onMounted(() => {
 
   render()
 
-  function handleClick(e: MouseEvent, gl) {
+  function handleClick(e: MouseEvent) {
     if (!canvas.value) return
 
     typeAxis.axisX = !typeAxis.axisX
