@@ -26,18 +26,18 @@ export function useDot(x, y, neighbourhood) {
 
   // Movement logic
   const move = (mouse) => {
-    const centerBall = { x: mouse.pos.x, y: mouse.pos.y, radius: state.neighbourhood }
-    const radius = state.neighbourhood
-    const dx = -mouse.pos.x + state.x
-    const dy = -mouse.pos.y + state.y
-    const minDist = state.radius + radius
-    const dist = Math.sqrt(dx ** 2 + dy ** 2)
+    let centerBall = { x: mouse.pos.x, y: mouse.pos.y, radius: state.neighbourhood }
+    let radius = state.neighbourhood
+    let dx = -mouse.pos.x + state.x
+    let dy = -mouse.pos.y + state.y
+    let minDist = state.radius + radius
+    let dist = Math.sqrt(dx ** 2 + dy ** 2)
 
     if (dist < minDist) {
       state.float = 0
-      const angle = Math.atan2(dy, dx)
-      const tx = centerBall.x + Math.cos(angle) * minDist
-      const ty = centerBall.y + Math.sin(angle) * minDist
+      let angle = Math.atan2(dy, dx)
+      let tx = centerBall.x + Math.cos(angle) * minDist
+      let ty = centerBall.y + Math.sin(angle) * minDist
 
       state.vx += (tx - state.x) / 10
       state.vy += (ty - state.y) / 10
@@ -68,7 +68,7 @@ export function useDot(x, y, neighbourhood) {
 
   // Add a neighbor for interaction
   const addNeighbor = (neighbor, compress, strength) => {
-    const dist = Math.sqrt((neighbor.x - state.x) ** 2 + (neighbor.y - state.y) ** 2)
+    let dist = Math.sqrt((neighbor.x - state.x) ** 2 + (neighbor.y - state.y) ** 2)
     state.neighbors.push({
       point: neighbor,
       x: neighbor.x,
@@ -89,7 +89,7 @@ export function useDot(x, y, neighbourhood) {
   // Set neighboring dots
   const setNeighbors = (prev, next) => {
     addNeighbor(prev, 30, 0.5)
-    addNeighbor(next, 30, 0.5)
+    // addNeighbor(next, 30, 0.5)
   }
 
   // Spring back towards the original position
@@ -104,17 +104,17 @@ export function useDot(x, y, neighbourhood) {
   // Handle interactions with neighbors
   const think = () => {
     state.neighbors.forEach((n) => {
-      const dx = state.x - n.x
-      const dy = state.y - n.y
-      const d = Math.sqrt(dx ** 2 + dy ** 2)
+      let dx = state.x - n.x
+      let dy = state.y - n.y
+      let d = Math.sqrt(dx ** 2 + dy ** 2)
       let a = ((n.dist - d) / d) * n.strength
 
       if (d < n.dist) {
         a /= n.compress
       }
 
-      const ox = dx * a * state.friction
-      const oy = dy * a * state.friction
+      let ox = dx * a * state.friction
+      let oy = dy * a * state.friction
 
       state.vx += ox
       state.vy += oy

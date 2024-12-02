@@ -69,7 +69,7 @@ export default class Jelateria {
       var pi = i === 0 ? len - 1 : i - 1
       var ni = i === len - 1 ? 0 : i + 1
       jp.setNeighbors(dots[pi], dots[ni])
-      console.log(jp)
+      // console.log(jp)
       for (var j = 0; j < len; j++) {
         var ojp = dots[j]
         var curdist = Math.sqrt((ojp.x - jp.x) * (ojp.x - jp.x) + (ojp.y - jp.y) * (ojp.y - jp.y))
@@ -98,6 +98,8 @@ export default class Jelateria {
   draw() {
     this.ctx.clearRect(0, 0, this.width, this.height)
 
+    console.log(this.m)
+
     // mouse draw
     this.centerBall.x = this.m.pos.x
     this.centerBall.y = this.m.pos.y
@@ -110,6 +112,7 @@ export default class Jelateria {
         dot.think()
       })
       island.dots.forEach((dot) => {
+        console.log(this.m)
         dot.move(this.m)
         dot.draw(this.ctx)
         dot.drawAnchor(this.ctx)

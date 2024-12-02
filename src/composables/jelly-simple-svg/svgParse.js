@@ -57,7 +57,7 @@ export function svgParse(SvgSelector, NumberOfPoints, leftOffset, topOffset) {
   for (var i = 0; i < path.length; i++) {
     pointsData.push(getPathPoints(path[i]))
   }
-  // console.log(pointsData)
+  console.log(pointsData)
   pointsData[0].map((xy) => {
     point = [] // specify SCALE here
     point[0] = xy.x / 32

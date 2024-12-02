@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
 
-import jelaModule from '@/assets/jelly-simple-svg/jelaModule'
-// import { jelaModule } from '@/composables/jelly-simple-svg/jelaModule'
+// import jelaModule from '@/assets/jelly-simple-svg/jelaModule'
+import { jelaModule } from '@/composables/jelly-simple-svg/jelaModule'
 
 const canvas = ref<HTMLCanvasElement | null>(null)
 let ctx: CanvasRenderingContext2D | null = null

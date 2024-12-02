@@ -22,6 +22,7 @@ export default class Dot {
   }
 
   move(m) {
+    console.log(m)
     let centerBall = { x: m.pos.x, y: m.pos.y, radius: this.neihgbourhood }
 
     // let radius = m.down?150:100;

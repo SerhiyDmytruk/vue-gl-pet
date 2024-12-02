@@ -2,18 +2,21 @@ import { useMouse } from './mouse'
 import { useDot } from './jellydot'
 import { useBall } from './ball'
 import { svgParse } from './svgParse'
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 
 export function jelaModule(opts) {
+  const canvasRef = ref(opts.canvas) // Wrap canvas in a ref
+  const { pos, down } = useMouse(canvasRef) // Use the ref in useMouse
+
   const options = reactive({
     canvas: opts.canvas,
     ctx: opts.canvas.getContext('2d'),
     paths: opts.paths,
     islands: [],
     radius: opts.radius || 50,
-    m: new useMouse(opts.canvas),
+    m: pos,
     paused: true,
-    centerBall: new useBall(opts.radius, '#ff0000'),
+    centerBall: useBall(opts.radius, '#ff0000'),
     height: parseInt(window.getComputedStyle(opts.canvas).height),
     width: parseInt(window.getComputedStyle(opts.canvas).width),
     time: 0
@@ -83,8 +86,8 @@ export function jelaModule(opts) {
 
   const draw = () => {
     options.ctx.clearRect(0, 0, options.width, options.height)
-
     // mouse draw
+    console.log(options.m.pos)
     options.centerBall.x = options.m.pos.x
     options.centerBall.y = options.m.pos.y
     options.centerBall.draw(options.ctx)
@@ -94,6 +97,7 @@ export function jelaModule(opts) {
       floatEffect(island)
       island.dots.forEach((dot) => {
         dot.think()
+        // console.log(options.m)
         dot.move(options.m)
         dot.draw(options.ctx)
         dot.drawAnchor(options.ctx)
@@ -107,7 +111,7 @@ export function jelaModule(opts) {
       options.time++
       draw()
     }
-    window.requestAnimationFrame(tick.bind(this))
+    window.requestAnimationFrame(tick)
   }
 
   const pause = () => {
@@ -123,5 +127,5 @@ export function jelaModule(opts) {
   parsePaths() // Initialize islands
   tick() // Start the animation loop
 
-  return { options, pause, play }
+  return { options, pause: () => (options.paused = true), play: () => (options.paused = false) }
 }

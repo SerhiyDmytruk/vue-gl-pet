@@ -2,32 +2,33 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import Vec2 from './vec2'
 
 export function useMouse(canvasRef) {
-  const pos = ref(new Vec2(0, 0))
-  const down = ref(false)
+  let pos = ref(new Vec2(0, 0))
+  let down = ref(false)
 
   function updateMousePosition(event) {
-    const canvas = canvasRef.value
+    console.log('Mouse Position:', event)
+
+    let canvas = canvasRef.value
 
     if (!canvas) return
 
-    const rect = canvas.getBoundingClientRect()
+    let rect = canvas.getBoundingClientRect()
+    console.log('Mouse Position:', rect)
+
     pos.value.set(event.clientX - rect.left, event.clientY - rect.top)
-    console.log(pos.value)
+    console.log('Mouse Position:', event.clientX - rect.left, event.clientY - rect.top)
   }
 
-  function handleMouseDown(event) {
+  function handleMouseDown() {
     down.value = true
-    updateMousePosition(event)
   }
 
-  function handleMouseUp(event) {
+  function handleMouseUp() {
     down.value = false
-    updateMousePosition(event)
   }
 
   onMounted(() => {
-    const canvas = canvasRef.value
-    if (!canvas) return
+    let canvas = canvasRef.value
 
     canvas.addEventListener('mousemove', updateMousePosition)
     canvas.addEventListener('mousedown', handleMouseDown)
@@ -35,8 +36,7 @@ export function useMouse(canvasRef) {
   })
 
   onUnmounted(() => {
-    const canvas = canvasRef.value
-    if (!canvas) return
+    let canvas = canvasRef.value
 
     canvas.removeEventListener('mousemove', updateMousePosition)
     canvas.removeEventListener('mousedown', handleMouseDown)
@@ -47,27 +47,4 @@ export function useMouse(canvasRef) {
     pos,
     down
   }
-
-  // constructor(canvas) {
-  //   this.pos = new Vec2(0, 0)
-  //   this.down = false
-
-  //   var self = this
-
-  //   canvas.onmousemove = (e) => {
-  //     var r = canvas.getBoundingClientRect()
-  //     self.pos.set(e.clientX - r.left, e.clientY - r.top)
-  //     return e.preventDefault()
-  //   }
-  //   canvas.onmouseup = (e) => {
-  //     self.down = false
-  //     return e.preventDefault()
-  //   }
-  //   canvas.onmousedown = (e) => {
-  //     self.down = true
-  //     var r = canvas.getBoundingClientRect()
-  //     self.pos.set(e.clientX - r.left, e.clientY - r.top)
-  //     return e.preventDefault()
-  //   }
-  // }
 }
