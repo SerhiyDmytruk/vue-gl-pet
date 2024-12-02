@@ -2,7 +2,7 @@ import { useMouse } from './mouse'
 import { useDot } from './jellydot'
 import { useBall } from './ball'
 import { svgParse } from './svgParse'
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted, onUnmounted } from 'vue'
 
 export function jelaModule(opts) {
   const canvasRef = ref(opts.canvas) // Wrap canvas in a ref
@@ -29,7 +29,10 @@ export function jelaModule(opts) {
         color: path.color,
         float: path.float
       }
-      svgParse(path.path, path.points, path.offsetX, path.offsetY).forEach((dot) => {
+
+      console.log(path)
+
+      svgParse(path.path, path.points, path.offsetX, path.offsetY, path.color).forEach((dot) => {
         island.dots.push(new useDot(dot[0], dot[1], options.radius))
       })
 
@@ -69,7 +72,7 @@ export function jelaModule(opts) {
     }
   }
 
-  const ConnectDots = (island) => {
+  const connectDots = (island) => {
     let dots = island.dots
     options.ctx.beginPath()
 
@@ -87,9 +90,10 @@ export function jelaModule(opts) {
   const draw = () => {
     options.ctx.clearRect(0, 0, options.width, options.height)
     // mouse draw
-    console.log(options.m.pos)
-    options.centerBall.x = options.m.pos.x
-    options.centerBall.y = options.m.pos.y
+    options.centerBall.x = options.m.x
+    options.centerBall.y = options.m.y
+    console.log(options.centerBall.y)
+    // console.log(options.centerBall, options.ctx)
     options.centerBall.draw(options.ctx)
     // end
 
@@ -97,12 +101,11 @@ export function jelaModule(opts) {
       floatEffect(island)
       island.dots.forEach((dot) => {
         dot.think()
-        // console.log(options.m)
         dot.move(options.m)
         dot.draw(options.ctx)
         dot.drawAnchor(options.ctx)
       })
-      ConnectDots(island)
+      connectDots(island)
     })
   }
 

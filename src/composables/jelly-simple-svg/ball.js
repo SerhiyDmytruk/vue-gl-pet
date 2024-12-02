@@ -1,8 +1,6 @@
 import { reactive } from 'vue'
 
 export function useBall(radius, color) {
-  console.log(radius, color)
-
   let ball = reactive({
     radius: radius || 20,
     color: color || '#EDC951',
@@ -22,8 +20,10 @@ export function useBall(radius, color) {
   })
 
   const draw = (context) => {
-    // console.log(context, ball)
+    console.log(context, 'context')
+    console.log(ball, 'ball')
     context.save()
+    console.log(ball.x, ball.y)
     context.translate(ball.x, ball.y)
     context.rotate(ball.rotation)
     context.scale(ball.scaleX, ball.scaleY)

@@ -3,6 +3,8 @@
 // ==================
 
 export function svgParse(SvgSelector, NumberOfPoints, leftOffset, topOffset) {
+  console.log(SvgSelector, NumberOfPoints, leftOffset, topOffset)
+
   // Смещение картинки относительно левого верхнего угла в пикселях
   leftOffset = leftOffset || 0
   topOffset = topOffset || 0

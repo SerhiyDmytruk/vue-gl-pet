@@ -26,10 +26,10 @@ export function useDot(x, y, neighbourhood) {
 
   // Movement logic
   const move = (mouse) => {
-    let centerBall = { x: mouse.pos.x, y: mouse.pos.y, radius: state.neighbourhood }
+    let centerBall = { x: mouse.x, y: mouse.y, radius: state.neighbourhood }
     let radius = state.neighbourhood
-    let dx = -mouse.pos.x + state.x
-    let dy = -mouse.pos.y + state.y
+    let dx = -mouse.x + state.x
+    let dy = -mouse.y + state.y
     let minDist = state.radius + radius
     let dist = Math.sqrt(dx ** 2 + dy ** 2)
 

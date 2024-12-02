@@ -19,7 +19,8 @@ export default class Ball {
   }
 
   draw(context) {
-    // console.log(context, this)
+    console.log(context, 'context')
+    console.log(this, 'ball')
     context.save()
     context.translate(this.x, this.y)
     context.rotate(this.rotation)

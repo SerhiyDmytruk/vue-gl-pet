@@ -11,7 +11,7 @@ export default class Jelateria {
     this.paths = opts.paths
     this.islands = []
     this.radius = opts.radius || 50
-    this.m = new Mouse(this.canvas)
+    this.m = new Mouse(opts.canvas)
     this.parsePaths()
     this.paused = true
     this.centerBall = new Ball(this.radius, '#ff0000')
@@ -43,21 +43,10 @@ export default class Jelateria {
     //
     let amplitude = island.float
     island.dots.forEach((dot) => {
-      // console.log(dot);
-      if (parseInt(dot.x) - parseInt(dot.originalX) > 0) {
-        // console.log(parseInt(dot.x),parseInt(dot.originalX),'ints');
-      }
-
       if (
         parseInt(dot.x) == parseInt(dot.originalX) &&
         parseInt(dot.y) == parseInt(dot.originalY)
       ) {
-        // dot.vx = 10;
-
-        // console.log(this.time);
-        // dot.x = dot.originalX;
-        // console.log(dot);
-        // console.log('runme');
         dot.floatMe(amplitude + (amplitude / 3) * Math.random())
       }
     })
@@ -69,7 +58,6 @@ export default class Jelateria {
       var pi = i === 0 ? len - 1 : i - 1
       var ni = i === len - 1 ? 0 : i + 1
       jp.setNeighbors(dots[pi], dots[ni])
-      // console.log(jp)
       for (var j = 0; j < len; j++) {
         var ojp = dots[j]
         var curdist = Math.sqrt((ojp.x - jp.x) * (ojp.x - jp.x) + (ojp.y - jp.y) * (ojp.y - jp.y))
@@ -98,11 +86,13 @@ export default class Jelateria {
   draw() {
     this.ctx.clearRect(0, 0, this.width, this.height)
 
-    console.log(this.m)
+    // console.log(this.m)
 
     // mouse draw
     this.centerBall.x = this.m.pos.x
     this.centerBall.y = this.m.pos.y
+    console.log(this.centerBall, 'this.centerBall')
+    console.log(this.ctx, 'this.ctx')
     this.centerBall.draw(this.ctx)
     // end
 
@@ -112,7 +102,7 @@ export default class Jelateria {
         dot.think()
       })
       island.dots.forEach((dot) => {
-        console.log(this.m)
+        // console.log(this.m)
         dot.move(this.m)
         dot.draw(this.ctx)
         dot.drawAnchor(this.ctx)

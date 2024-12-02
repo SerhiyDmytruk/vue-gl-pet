@@ -22,52 +22,35 @@ export default class Dot {
   }
 
   move(m) {
-    console.log(m)
     let centerBall = { x: m.pos.x, y: m.pos.y, radius: this.neihgbourhood }
-
-    // let radius = m.down?150:100;
     let radius = this.neihgbourhood
-    // var minDist = 180;
-    // this.x += 1;
-    // console.log(m.pos);
-
     let dx = -m.pos.x + this.x
     let dy = -m.pos.y + this.y
     var minDist = this.radius + radius
     let dist = Math.sqrt(dx * dx + dy * dy)
-
     if (dist < minDist) {
       this.float = 0
-
       var angle = Math.atan2(dy, dx),
         tx = centerBall.x + Math.cos(angle) * minDist,
         ty = centerBall.y + Math.sin(angle) * minDist
-
       this.vx += (tx - this.x) / 10
       this.vy += (ty - this.y) / 10
     }
-
     this.vx *= this.friction
     this.vy *= this.friction
-
-    // begin spir
+    // begin springBack
     this.springBack()
-
     if (this.float > 0) {
       this.x =
         this.originalX + this.lastFloat * Math.sin((2 * Math.PI * this.float) / this.lastFloat)
       // this.vx = 0;
       this.float = this.float - 1 / 100
     }
-
     this.x += this.vx
     this.y += this.vy
-
-    // console.log(this.float);
   }
 
   floatMe(amount) {
-    // console.log('fl');
     if (this.float < 0.1) {
       this.float = amount
       this.lastFloat = amount

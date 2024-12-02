@@ -1,22 +1,16 @@
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref } from 'vue'
 import Vec2 from './vec2'
 
 export function useMouse(canvasRef) {
   let pos = ref(new Vec2(0, 0))
   let down = ref(false)
+  let canvas = canvasRef.value
 
   function updateMousePosition(event) {
-    console.log('Mouse Position:', event)
-
-    let canvas = canvasRef.value
-
     if (!canvas) return
-
     let rect = canvas.getBoundingClientRect()
-    console.log('Mouse Position:', rect)
 
     pos.value.set(event.clientX - rect.left, event.clientY - rect.top)
-    console.log('Mouse Position:', event.clientX - rect.left, event.clientY - rect.top)
   }
 
   function handleMouseDown() {
@@ -27,24 +21,24 @@ export function useMouse(canvasRef) {
     down.value = false
   }
 
-  onMounted(() => {
-    let canvas = canvasRef.value
-
+  function startListening() {
     canvas.addEventListener('mousemove', updateMousePosition)
     canvas.addEventListener('mousedown', handleMouseDown)
     canvas.addEventListener('mouseup', handleMouseUp)
-  })
+  }
 
-  onUnmounted(() => {
-    let canvas = canvasRef.value
-
+  function stopListening() {
     canvas.removeEventListener('mousemove', updateMousePosition)
     canvas.removeEventListener('mousedown', handleMouseDown)
     canvas.removeEventListener('mouseup', handleMouseUp)
-  })
+  }
+
+  startListening()
 
   return {
     pos,
-    down
+    down,
+    startListening,
+    stopListening
   }
 }
