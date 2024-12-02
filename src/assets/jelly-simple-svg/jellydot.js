@@ -1,5 +1,4 @@
 // for debug
-
 export default class Dot {
   constructor(x, y, neihgbourhood) {
     this.originalX = x

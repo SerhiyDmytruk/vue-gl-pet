@@ -27,7 +27,8 @@
     "lib": [
       "esnext",
       "dom"
-    ]
+    ],
+    "allowJs": true
   },
   "include": [
     "src/**/*.ts",

@@ -69,7 +69,7 @@ export default class Jelateria {
       var pi = i === 0 ? len - 1 : i - 1
       var ni = i === len - 1 ? 0 : i + 1
       jp.setNeighbors(dots[pi], dots[ni])
-      // console.log(dots[pi], dots[ni],pi,ni);
+      console.log(jp)
       for (var j = 0; j < len; j++) {
         var ojp = dots[j]
         var curdist = Math.sqrt((ojp.x - jp.x) * (ojp.x - jp.x) + (ojp.y - jp.y) * (ojp.y - jp.y))
