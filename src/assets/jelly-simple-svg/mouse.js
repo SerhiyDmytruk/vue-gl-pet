@@ -7,14 +7,9 @@ export default class Mouse {
 
     var self = this
 
-    console.log(canvas)
-
     canvas.onmousemove = (e) => {
       var r = canvas.getBoundingClientRect()
       self.pos.set(e.clientX - r.left, e.clientY - r.top)
-
-      console.log(self.pos)
-
       return e.preventDefault()
     }
     canvas.onmouseup = (e) => {

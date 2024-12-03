@@ -2,7 +2,7 @@ import { useMouse } from './mouse'
 import { useDot } from './jellydot'
 import { useBall } from './ball'
 import { svgParse } from './svgParse'
-import { reactive, ref, onMounted, onUnmounted } from 'vue'
+import { reactive, ref, isProxy, toRaw } from 'vue'
 
 export function jelaModule(opts) {
   const canvasRef = ref(opts.canvas) // Wrap canvas in a ref
@@ -30,11 +30,12 @@ export function jelaModule(opts) {
         float: path.float
       }
 
-      console.log(path)
-
       svgParse(path.path, path.points, path.offsetX, path.offsetY, path.color).forEach((dot) => {
         island.dots.push(new useDot(dot[0], dot[1], options.radius))
       })
+
+      console.log(path)
+      // console.log(island)
 
       buildNeighbours(island.dots)
       options.islands.push(island)
@@ -90,11 +91,7 @@ export function jelaModule(opts) {
   const draw = () => {
     options.ctx.clearRect(0, 0, options.width, options.height)
     // mouse draw
-    options.centerBall.x = options.m.x
-    options.centerBall.y = options.m.y
-    console.log(options.centerBall.y)
-    // console.log(options.centerBall, options.ctx)
-    options.centerBall.draw(options.ctx)
+    options.centerBall.draw(options.ctx, options.m)
     // end
 
     options.islands.forEach((island) => {

@@ -5,7 +5,6 @@ import SvgParse from './svgParse'
 
 export default class Jelateria {
   constructor(opts) {
-    console.log(opts)
     this.canvas = opts.canvas
     this.ctx = this.canvas.getContext('2d')
     this.paths = opts.paths
@@ -34,6 +33,10 @@ export default class Jelateria {
       })
       island.color = path.color
       island.float = path.float
+
+      // console.log(path)
+      // // console.log(island)
+
       this.buildNeighbours(island.dots)
       this.islands.push(island)
     })
@@ -70,6 +73,7 @@ export default class Jelateria {
 
   ConnectDots(island) {
     let dots = island.dots
+    console.log(this.ctx)
     this.ctx.beginPath()
 
     for (var i = 0, jlen = dots.length; i <= jlen; ++i) {
@@ -85,14 +89,9 @@ export default class Jelateria {
 
   draw() {
     this.ctx.clearRect(0, 0, this.width, this.height)
-
-    // console.log(this.m)
-
     // mouse draw
     this.centerBall.x = this.m.pos.x
     this.centerBall.y = this.m.pos.y
-    console.log(this.centerBall, 'this.centerBall')
-    console.log(this.ctx, 'this.ctx')
     this.centerBall.draw(this.ctx)
     // end
 

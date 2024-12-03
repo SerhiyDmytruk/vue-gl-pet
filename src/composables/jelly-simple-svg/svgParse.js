@@ -2,8 +2,8 @@
 // Converts SVG path into JS array of dots with coordinates
 // ==================
 
-export function svgParse(SvgSelector, NumberOfPoints, leftOffset, topOffset) {
-  console.log(SvgSelector, NumberOfPoints, leftOffset, topOffset)
+export function svgParse(SvgSelector, NumberOfPoints, leftOffset, topOffset, color) {
+  console.log(SvgSelector, NumberOfPoints, leftOffset, topOffset, color)
 
   // Смещение картинки относительно левого верхнего угла в пикселях
   leftOffset = leftOffset || 0
@@ -59,7 +59,6 @@ export function svgParse(SvgSelector, NumberOfPoints, leftOffset, topOffset) {
   for (var i = 0; i < path.length; i++) {
     pointsData.push(getPathPoints(path[i]))
   }
-  console.log(pointsData)
   pointsData[0].map((xy) => {
     point = [] // specify SCALE here
     point[0] = xy.x / 32
