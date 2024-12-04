@@ -14,6 +14,7 @@ export function svgParse(SvgSelector, NumberOfPoints, leftOffset, topOffset, col
   // Итоговый размер картинки в ширину который мы хотим
   let SCALE = 150
   let path = document.querySelectorAll(SvgSelector)
+  console.log(path, SvgSelector)
   let points = [],
     pointsData = [],
     POINTS = [],

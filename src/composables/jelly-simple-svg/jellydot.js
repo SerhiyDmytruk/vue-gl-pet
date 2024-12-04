@@ -1,4 +1,4 @@
-import { reactive, toRefs } from 'vue'
+import { reactive, toRaw } from 'vue'
 
 export function useDot(x, y, neighbourhood) {
   // Reactive state for the dot
@@ -34,6 +34,9 @@ export function useDot(x, y, neighbourhood) {
     let dist = Math.sqrt(dx ** 2 + dy ** 2)
 
     if (dist < minDist) {
+      console.log('touch')
+      console.log(mouse)
+
       state.float = 0
       let angle = Math.atan2(dy, dx)
       let tx = centerBall.x + Math.cos(angle) * minDist
@@ -56,6 +59,8 @@ export function useDot(x, y, neighbourhood) {
 
     state.x += state.vx
     state.y += state.vy
+
+    // console.log(state.vx, state.vy, state.x, state.y)
   }
 
   // Trigger a floating effect
@@ -66,32 +71,6 @@ export function useDot(x, y, neighbourhood) {
     }
   }
 
-  // Add a neighbor for interaction
-  const addNeighbor = (neighbor, compress, strength) => {
-    let dist = Math.sqrt((neighbor.x - state.x) ** 2 + (neighbor.y - state.y) ** 2)
-    state.neighbors.push({
-      point: neighbor,
-      x: neighbor.x,
-      y: neighbor.y,
-      vx: neighbor.vx,
-      vy: neighbor.vy,
-      dist,
-      compress,
-      strength
-    })
-  }
-
-  // Add across neighbor
-  const addAcrossNeighbor = (neighbor) => {
-    addNeighbor(neighbor, 1, 1)
-  }
-
-  // Set neighboring dots
-  const setNeighbors = (prev, next) => {
-    addNeighbor(prev, 30, 0.5)
-    // addNeighbor(next, 30, 0.5)
-  }
-
   // Spring back towards the original position
   const springBack = () => {
     const dx = state.originalX - state.x
@@ -99,32 +78,6 @@ export function useDot(x, y, neighbourhood) {
 
     state.vx += dx * state.spring
     state.vy += dy * state.spring
-  }
-
-  // Handle interactions with neighbors
-  const think = () => {
-    state.neighbors.forEach((n) => {
-      let dx = state.x - n.x
-      let dy = state.y - n.y
-      let d = Math.sqrt(dx ** 2 + dy ** 2)
-      let a = ((n.dist - d) / d) * n.strength
-
-      if (d < n.dist) {
-        a /= n.compress
-      }
-
-      let ox = dx * a * state.friction
-      let oy = dy * a * state.friction
-
-      state.vx += ox
-      state.vy += oy
-
-      n.point.vx -= ox
-      n.point.vy -= oy
-
-      // Visual feedback based on movement intensity
-      n.point.color = ox > 0.001 ? 'rgba(255,0,255,1)' : 'rgba(0,255,255,1)'
-    })
   }
 
   // Draw the dot
@@ -160,13 +113,9 @@ export function useDot(x, y, neighbourhood) {
   }
 
   return {
-    ...toRefs(state),
+    ...toRaw(state),
     move,
     floatMe,
-    addNeighbor,
-    addAcrossNeighbor,
-    setNeighbors,
-    think,
     draw,
     drawAnchor
   }

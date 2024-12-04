@@ -2,11 +2,11 @@ import { useMouse } from './mouse'
 import { useDot } from './jellydot'
 import { useBall } from './ball'
 import { svgParse } from './svgParse'
-import { reactive, ref, isProxy, toRaw } from 'vue'
+import { reactive, ref } from 'vue'
 
 export function jelaModule(opts) {
   const canvasRef = ref(opts.canvas) // Wrap canvas in a ref
-  const { pos, down } = useMouse(canvasRef) // Use the ref in useMouse
+  const { pos } = useMouse(canvasRef) // Use the ref in useMouse
 
   const options = reactive({
     canvas: opts.canvas,
@@ -34,43 +34,8 @@ export function jelaModule(opts) {
         island.dots.push(new useDot(dot[0], dot[1], options.radius))
       })
 
-      console.log(path)
-      // console.log(island)
-
-      buildNeighbours(island.dots)
       options.islands.push(island)
     })
-  }
-
-  const floatEffect = (island) => {
-    //
-    let amplitude = island.float
-    island.dots.forEach((dot) => {
-      if (
-        parseInt(dot.x) == parseInt(dot.originalX) &&
-        parseInt(dot.y) == parseInt(dot.originalY)
-      ) {
-        dot.floatMe(amplitude + (amplitude / 3) * Math.random())
-      }
-    })
-  }
-
-  const buildNeighbours = (dots) => {
-    for (var i = 0, len = dots.length; i < len; i++) {
-      var jp = dots[i]
-      var pi = i === 0 ? len - 1 : i - 1
-      var ni = i === len - 1 ? 0 : i + 1
-
-      jp.setNeighbors(dots[pi], dots[ni])
-      // console.log(dots[pi], dots[ni],pi,ni);
-      for (var j = 0; j < len; j++) {
-        var ojp = dots[j]
-        var curdist = Math.sqrt((ojp.x - jp.x) * (ojp.x - jp.x) + (ojp.y - jp.y) * (ojp.y - jp.y))
-        if (ojp !== jp && ojp !== dots[pi] && ojp !== dots[ni] && curdist <= 30) {
-          jp.addAcrossNeighbor(ojp)
-        }
-      }
-    }
   }
 
   const connectDots = (island) => {
@@ -90,14 +55,13 @@ export function jelaModule(opts) {
 
   const draw = () => {
     options.ctx.clearRect(0, 0, options.width, options.height)
+
     // mouse draw
     options.centerBall.draw(options.ctx, options.m)
     // end
 
     options.islands.forEach((island) => {
-      floatEffect(island)
       island.dots.forEach((dot) => {
-        dot.think()
         dot.move(options.m)
         dot.draw(options.ctx)
         dot.drawAnchor(options.ctx)

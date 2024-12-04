@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
-// import jelaModule from '@/assets/jelly-simple-svg/jelaModule'
-import { jelaModule } from '@/composables/jelly-simple-svg/jelaModule'
+import jelaModule from '@/assets/jelly-simple-svg/jelaModule'
+// import { jelaModule } from '@/composables/jelly-simple-svg/jelaModule'
 
 const canvas = ref<HTMLCanvasElement | null>(null)
 let ctx: CanvasRenderingContext2D | null = null
@@ -13,11 +13,11 @@ onMounted(() => {
 
     let jela = new jelaModule({
       canvas: canvas.value,
-      radius: 100,
+      radius: 50,
       paths: [
         {
           path: '#f',
-          offsetX: 0,
+          offsetX: 30,
           offsetY: 0,
           points: 40,
           color: '#007700',
@@ -52,10 +52,6 @@ onMounted(() => {
 
     jela.play()
   }
-})
-
-onUnmounted(() => {
-  ctx = null
 })
 </script>
 

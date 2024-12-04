@@ -1,5 +1,3 @@
-import { reactive } from 'vue'
-
 export function useBall(radius, color) {
   let ball = {
     radius: radius || 20,

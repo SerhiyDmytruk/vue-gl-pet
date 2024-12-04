@@ -28,55 +28,37 @@ export default class Dot {
     let dy = -m.pos.y + this.y
     var minDist = this.radius + radius
     let dist = Math.sqrt(dx * dx + dy * dy)
+
     if (dist < minDist) {
+      console.log('touch')
+      console.log(m.pos)
+
       this.float = 0
-      var angle = Math.atan2(dy, dx),
-        tx = centerBall.x + Math.cos(angle) * minDist,
-        ty = centerBall.y + Math.sin(angle) * minDist
+      var angle = Math.atan2(dy, dx)
+      var tx = centerBall.x + Math.cos(angle) * minDist
+      var ty = centerBall.y + Math.sin(angle) * minDist
       this.vx += (tx - this.x) / 10
       this.vy += (ty - this.y) / 10
+
+      // console.log(this.vx, this.vy)
     }
+
     this.vx *= this.friction
     this.vy *= this.friction
+
     // begin springBack
     this.springBack()
+
     if (this.float > 0) {
       this.x =
         this.originalX + this.lastFloat * Math.sin((2 * Math.PI * this.float) / this.lastFloat)
-      // this.vx = 0;
       this.float = this.float - 1 / 100
     }
+
     this.x += this.vx
     this.y += this.vy
-  }
 
-  floatMe(amount) {
-    if (this.float < 0.1) {
-      this.float = amount
-      this.lastFloat = amount
-    }
-  }
-
-  addNeighbor(n, c, s) {
-    var dist = Math.sqrt((n.x - this.x) * (n.x - this.x) + (n.y - this.y) * (n.y - this.y))
-    this.neighbors.push({
-      point: n,
-      x: n.x,
-      y: n.y,
-      vx: n.vx,
-      vy: n.vy,
-      dist: dist,
-      compress: c,
-      strength: s
-    })
-  }
-
-  addAcrossNeighbor(n) {
-    this.addNeighbor(n, 1, 1)
-  }
-
-  setNeighbors(p, n) {
-    this.addNeighbor(p, 30, 0.5)
+    // console.log(this.vx, this.vy, this.x, this.y)
   }
 
   springBack() {
@@ -88,32 +70,6 @@ export default class Dot {
 
     this.vx += dx1
     this.vy += dy1
-  }
-
-  think() {
-    for (var i = 0, len = this.neighbors.length; i < len; i++) {
-      // console.log(this.neighbors);
-      var n = this.neighbors[i]
-      var dx = this.x - n.x
-      var dy = this.y - n.y
-      // console.log(this,n,'---');
-      var d = Math.sqrt(dx * dx + dy * dy)
-      var a = ((n.dist - d) / d) * n.strength
-      if (d < n.dist) {
-        a /= n.compress
-      }
-      var ox = dx * a * this.friction
-      var oy = dy * a * this.friction
-      // console.log(ox,oy);
-      // console.log(n)
-      this.vx += ox
-      this.vy += oy
-
-      n.point.vx -= ox
-      n.point.vy -= oy
-      if (ox > 0.001) n.point.color = 'rgba(255,0,255,1)'
-      else n.point.color = 'rgba(0,255,255,1)'
-    }
   }
 
   draw(context) {
