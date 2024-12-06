@@ -3,6 +3,9 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import * as THREE from 'three'
 
 const canvasContainer = ref<HTMLDivElement | null>(null)
+const renderer = new THREE.WebGLRenderer({ alpha: true })
+const geometry = new THREE.BufferGeometry()
+const material = new THREE.MeshBasicMaterial({ vertexColors: true, side: THREE.DoubleSide })
 
 onMounted(() => {
   if (canvasContainer.value) {
@@ -14,13 +17,9 @@ onMounted(() => {
     camera.position.z = 2
 
     // Renderer setup with transparency disabled
-    const renderer = new THREE.WebGLRenderer({ alpha: true })
     renderer.setSize(600, 600)
     renderer.setClearColor(new THREE.Color(0.75, 0.85, 0.8), 1.0)
     canvasContainer.value.appendChild(renderer.domElement)
-
-    // Triangle geometry with color data
-    const geometry = new THREE.BufferGeometry()
 
     // Extract positions and colors from the interleaved array
     // prettier-ignore
@@ -42,7 +41,6 @@ onMounted(() => {
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3)) // Last 3 are RGB
 
     // Material with vertex colors enabled
-    const material = new THREE.MeshBasicMaterial({ vertexColors: true, side: THREE.DoubleSide })
     const triangle = new THREE.Mesh(geometry, material)
 
     scene.add(triangle)
