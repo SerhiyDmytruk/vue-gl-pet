@@ -56,6 +56,11 @@ const router = createRouter({
       path: '/jelly-simple-svg',
       name: 'jelly-simple-svg',
       component: () => import('../views/JellySVGCanvasView.vue')
+    },
+    {
+      path: '/treejs-pyramid-x-trans',
+      name: 'treejs-pyramid',
+      component: () => import('../views/TreeJsPyramidXTransView.vue')
     }
   ]
 })

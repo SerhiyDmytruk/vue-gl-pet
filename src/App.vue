@@ -14,10 +14,11 @@ import { RouterLink, RouterView } from 'vue-router'
         <RouterLink to="/webgl-triangle">WebGl #1 (pure) - Triangle</RouterLink>
         <RouterLink to="/threejs-triangle">ThreeJs #1 - Triangle</RouterLink>
         <RouterLink to="/webgl-2-triangle">WebGl #2 - Triangle</RouterLink>
-        <RouterLink to="/webgl-cube">WebGl #2 - Cube</RouterLink>
-        <RouterLink to="/webgl-cube-texture">WebGl #2 - Textured Cube</RouterLink>
-        <RouterLink to="/webgl-pyramid-x-trans">WebGl #2 - Pyramid 'x-transiiton'</RouterLink>
+        <RouterLink to="/webgl-cube">WebGl #1 - Cube</RouterLink>
+        <RouterLink to="/webgl-cube-texture">WebGl #1 - Textured Cube</RouterLink>
+        <RouterLink to="/webgl-pyramid-x-trans">WebGl #1 - Pyramid 'x-transiiton'</RouterLink>
         <RouterLink to="/jelly-simple-svg">Jelly Canvas SVG</RouterLink>
+        <RouterLink to="/treejs-pyramid-x-trans">TreeJs - Pyramid 'x-transiiton'</RouterLink>
       </nav>
     </div>
   </header>

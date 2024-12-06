@@ -152,5 +152,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <canvas ref="canvas" width="600" height="600"> Your browser does not support WebGL. </canvas>
+  <div>
+    <h1>Simple Pyramid with transition created by WebGl</h1>
+
+    <canvas ref="canvas" width="600" height="600"> Your browser does not support WebGL. </canvas>
+  </div>
 </template>

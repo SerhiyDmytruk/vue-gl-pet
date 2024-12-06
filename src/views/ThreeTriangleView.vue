@@ -48,6 +48,7 @@ onMounted(() => {
     scene.add(triangle)
 
     // Animation loop
+    // eslint-disable-next-line no-inner-declarations
     function animate() {
       requestAnimationFrame(animate)
       renderer.render(scene, camera)
