@@ -19,6 +19,7 @@ import { RouterLink, RouterView } from 'vue-router'
         <RouterLink to="/webgl-pyramid-x-trans">WebGl #1 - Pyramid 'x-transiiton'</RouterLink>
         <RouterLink to="/jelly-simple-svg">Jelly Canvas SVG</RouterLink>
         <RouterLink to="/treejs-pyramid-x-trans">TreeJs - Pyramid 'x-transiiton'</RouterLink>
+        <RouterLink to="/canvas-wave">Canvas Wave</RouterLink>
       </nav>
     </div>
   </header>

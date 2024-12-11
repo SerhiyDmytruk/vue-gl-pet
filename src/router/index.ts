@@ -61,6 +61,11 @@ const router = createRouter({
       path: '/treejs-pyramid-x-trans',
       name: 'treejs-pyramid',
       component: () => import('../views/treejs/TreeJsPyramidXTransView.vue')
+    },
+    {
+      path: '/canvas-wave',
+      name: 'canvas-wave',
+      component: () => import('../views/canvas/WaveCanvas.vue')
     }
   ]
 })
