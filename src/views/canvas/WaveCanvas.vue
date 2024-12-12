@@ -11,8 +11,6 @@ let context: CanvasRenderingContext2D | null = null
 function createWave(context: any, options: Object) {
   options = options || {}
 
-  console.log(options)
-
   // API
   let wave = {
     // Properties
@@ -123,41 +121,39 @@ onMounted(() => {
   if (canvas.value) {
     context = canvas.value.getContext('2d')
 
-    let resolution = window.devicePixelRatio || 1
-
     let waves = []
 
     let vw = window.innerWidth
     let vh = window.innerHeight
 
     let wave1 = createWave(context, {
-      amplitude: 10, //velikost vlneni
+      amplitude: 10,
       duration: 4,
       fillStyle: 'rgba(81,182,254,0.5)',
       frequency: 2.5,
-      width: 500,
+      width: canvas.value.width / 1, // Match canvas width
       height: vh,
       segments: 100,
       waveHeight: vh * 0.25
     })
 
     let wave2 = createWave(context, {
-      amplitude: 10, //velikost vlneni
+      amplitude: 10,
       duration: 4,
       fillStyle: 'rgba(81,182,254,0.5)',
       frequency: 1.5,
-      width: 500,
+      width: canvas.value.width / 1, // Match canvas width
       height: vh,
       segments: 100,
       waveHeight: vh * 0.25
     })
 
     let wave3 = createWave(context, {
-      amplitude: 10, //velikost vlneni
+      amplitude: 10,
       duration: 4,
       fillStyle: 'rgba(81,182,254,0.5)',
       frequency: 0.5,
-      width: 500,
+      width: canvas.value.width / 1, // Match canvas width
       height: vh,
       segments: 100,
       waveHeight: vh * 0.35
@@ -165,14 +161,13 @@ onMounted(() => {
 
     waves.push(wave1, wave2, wave3)
 
-    gsap.to(waves, {
-      duration: 10,
-      waveHeight: vh / 2,
-      ease: 'sine.inOut',
-      repeat: -1,
-      repeatDelay: 1,
-      yoyo: true
-    })
+    // gsap.to(waves, {
+    //   duration: 5,
+    //   ease: 'sine.inOut',
+    //   repeat: -1,
+    //   repeatDelay: 1,
+    //   yoyo: true
+    // })
 
     gsap.to(wave1, {
       duration: 2,
@@ -213,31 +208,38 @@ onMounted(() => {
 
     // scrolltriger
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: '.background',
-        pin: '.background', // pin the trigger element while active
-        start: 'top top', // when the top of the trigger hits the top of the viewport
-        end: '+=500', // end after scrolling 500px beyond the start
-        scrub: 1, // smooth scrubbing, takes 1 second to "catch up" to the scrollbar
-        markers: true
-      }
-    })
-
-    tl.to(canvas, {
-      //yPercent: -100,
-      ease: 'none'
-    })
+    gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: '.background',
+          pin: '.background', // pin the trigger element while active
+          start: 'top top', // when the top of the trigger hits the top of the viewport
+          end: 'bottom center', // end after scrolling 500px beyond the start
+          scrub: 1, // smooth scrubbing, takes 1 second to "catch up" to the scrollbar
+          markers: true
+        }
+      })
+      .to(waves, {
+        waveHeight: vh, // Water falls to the bottom
+        amplitude: 5, // Reduce wave amplitude
+        ease: 'sine.inOut'
+      })
+      .to(waves, {
+        waveHeight: vh * 0.25, // Reset wave height
+        amplitude: 10, // Restore wave amplitude
+        ease: 'sine.inOut'
+      })
   }
 })
 
 onUnmounted(() => {
+  // gsap.ticker.remove(update)
   context = null
 })
 </script>
 
 <template>
-  <div class="background">
+  <div>
     <div>
       <h1>Wave animation Canvas</h1>
       <p>This code example is to try to implement the code in vue and understand how it works</p>
@@ -249,9 +251,11 @@ onUnmounted(() => {
       </a>
     </div>
 
-    <section style="height: 10vh"></section>
+    <!-- <section style="height: 10vh"></section> -->
 
-    <canvas ref="canvas" id="drawOnMe" width="600" height="600"></canvas>
+    <div class="background">
+      <canvas ref="canvas" id="drawOnMe" width="600" height="600"></canvas>
+    </div>
     <section style="height: 20vh"></section>
   </div>
 </template>
