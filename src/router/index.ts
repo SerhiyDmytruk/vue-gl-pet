@@ -1,96 +1,93 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 
-import AnimationListView from '@/views/AnimationListView.vue'
-import CanvasListView from '@/views/CanvasListView.vue'
-import ThreeJsListView from '@/views/ThreeJsListView.vue'
-import WebGlListView from '@/views/WebGlListView.vue'
+import RouterListView from '@/views/RouterListView.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'HomeView',
+    name: 'Home',
     component: HomeView
   },
   {
     path: '/animation',
-    name: 'AnimationListView',
-    component: AnimationListView,
+    name: 'Animation List',
+    component: RouterListView,
     children: [
       {
         path: 'jelly-simple-img',
-        name: 'TextAnimationView',
+        name: 'Text Animation',
         component: () => import('@/views/animation/TextAnimationView.vue')
       }
     ]
   },
   {
     path: '/canvas',
-    name: 'CanvasListView',
-    component: CanvasListView,
+    name: 'Canvas List',
+    component: RouterListView,
     children: [
       {
         path: 'jelly-simple-obj',
-        name: 'JellyObjCanvasView',
+        name: 'Jelly Obj Canvas',
         component: () => import('@/views/canvas/JellyObjCanvasView.vue')
       },
       {
         path: 'jelly-simple-svg',
-        name: 'JellySVGCanvasView',
+        name: 'Jelly SVG Canvas',
         component: () => import('@/views/canvas/JellySVGCanvasView.vue')
       },
       {
         path: 'canvas-wave',
-        name: 'WaveCanvas',
+        name: 'Wave Canvas',
         component: () => import('@/views/canvas/WaveCanvas.vue')
       }
     ]
   },
   {
     path: '/webgl',
-    name: 'WebGlListView',
-    component: WebGlListView,
+    name: 'WebGl List',
+    component: RouterListView,
     children: [
       {
-        path: '/webgl-triangle',
-        name: 'WebGlTriangleView',
+        path: 'webgl-triangle',
+        name: 'WebGl Triangle',
         component: () => import('@/views/webgl/WebGlTriangleView.vue')
       },
       {
-        path: '/webgl-2-triangle',
-        name: 'WebGlTriangle2View',
+        path: 'webgl-2-triangle',
+        name: 'WebGl Triangle2',
         component: () => import('@/views/webgl/WebGlTriangle2View.vue')
       },
       {
-        path: '/webgl-cube',
-        name: 'WebGlCubeView',
+        path: 'webgl-cube',
+        name: 'WebGl Cube',
         component: () => import('@/views/webgl/WebGlCubeView.vue')
       },
       {
-        path: '/webgl-cube-texture',
-        name: 'WebGlCubeTextureView',
+        path: 'webgl-cube-texture',
+        name: 'WebGl Cube Texture',
         component: () => import('@/views/webgl/WebGlCubeTextureView.vue')
       },
       {
-        path: '/webgl-pyramid-x-trans',
-        name: 'WebGlPyramidXTransView',
+        path: 'webgl-pyramid-x-trans',
+        name: 'WebGl Pyramid XTrans',
         component: () => import('@/views/webgl/WebGlPyramidXTransView.vue')
       }
     ]
   },
   {
     path: '/threejs',
-    name: 'ThreeJsListView',
-    component: ThreeJsListView,
+    name: 'ThreeJsList',
+    component: RouterListView,
     children: [
       {
-        path: '/threejs-triangle',
-        name: 'ThreeTriangleView',
+        path: 'threejs-triangle',
+        name: 'Three Triangle',
         component: () => import('@/views/treejs/ThreeTriangleView.vue')
       },
       {
-        path: '/treejs-pyramid-x-trans',
-        name: 'TreeJsPyramidXTransView',
+        path: 'treejs-pyramid-trans',
+        name: 'TreeJs Pyramid Transition',
         component: () => import('@/views/treejs/TreeJsPyramidXTransView.vue')
       }
     ]
