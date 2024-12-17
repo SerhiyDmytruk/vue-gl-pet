@@ -26,32 +26,37 @@ onMounted(() => {
     camera.position.set(0, 1, 5)
 
     // Lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
-    const pointLight = new THREE.PointLight(0xffffff, 1)
-    pointLight.position.set(5, 5, 5)
-    scene.add(ambientLight, pointLight)
+    const ambientLight = new THREE.AmbientLight(0xffffff)
+    scene.add(ambientLight)
+
+    const pointLight = new THREE.PointLight(0xffffff, 15)
+    camera.add(pointLight)
+    scene.add(camera)
 
     // OrbitControls
     const controls = new OrbitControls(camera, renderer.domElement)
     controls.enableDamping = true
 
     // Load OBJ Model
-    const loader = new OBJLoader()
-    loader.load(
-      '/src/assets/Dopper-model.obj', // Updated path
-      (obj) => {
-        console.log(obj)
-        obj.position.y = -1
-        obj.scale.set(0.01, 0.01, 0.01)
-        scene.add(obj)
-      },
-      (xhr) => {
-        console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
-      },
-      (error) => {
-        console.error('An error occurred while loading the model:', error)
-      }
-    )
+    new MTLLoader().load('/src/assets/Dopper-model.mtl', function (materials) {
+      materials.preload()
+      const loader = new OBJLoader()
+      loader.setMaterials(materials).load(
+        '/src/assets/Dopper-model.obj', // Updated path
+        (obj) => {
+          console.log(obj)
+          obj.position.y = -1
+          obj.scale.set(0.01, 0.01, 0.01)
+          scene.add(obj)
+        },
+        (xhr) => {
+          console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
+        },
+        (error) => {
+          console.error('An error occurred while loading the model:', error)
+        }
+      )
+    })
 
     // Animation Loop
     // eslint-disable-next-line no-inner-declarations
