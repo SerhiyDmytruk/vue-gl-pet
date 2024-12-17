@@ -89,6 +89,11 @@ const routes = [
         path: 'treejs-pyramid-trans',
         name: 'TreeJs Pyramid Transition',
         component: () => import('@/views/treejs/TreeJsPyramidXTransView.vue')
+      },
+      {
+        path: 'treejs-bottle',
+        name: 'TreeJs Bottle View',
+        component: () => import('@/views/treejs/WebGlBottleView.vue')
       }
     ]
   }

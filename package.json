@@ -23,6 +23,7 @@
     "gsap": "^3.12.5",
     "pinia": "^2.1.7",
     "three": "^0.170.0",
+    "three-obj-mtl-loader": "^1.0.3",
     "three-orbit-controls": "^82.1.0",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"
