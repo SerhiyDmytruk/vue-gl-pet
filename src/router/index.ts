@@ -94,6 +94,11 @@ const routes = [
         path: 'treejs-bottle',
         name: 'TreeJs Bottle View',
         component: () => import('@/views/treejs/WebGlBottleView.vue')
+      },
+      {
+        path: 'treejs-bottle-animate',
+        name: 'TreeJs Bottle View Animate',
+        component: () => import('@/views/treejs/WebGlBottleAnimateView.vue')
       }
     ]
   }
