@@ -70,6 +70,11 @@ onMounted(() => {
               if (mesh.name === `Cup\\Solid` || mesh.name.includes('cap')) {
                 cupMesh = mesh
               }
+
+              // Identify and store the cap mesh
+              if (mesh.name === `Bottle\\Solid` || mesh.name.includes('cap')) {
+                bottleMesh = mesh
+              }
             }
           })
 
@@ -110,10 +115,10 @@ function onScroll(event: WheelEvent) {
     renderer.render(scene, camera) // Force update
   }
 
-  if (cupMesh) {
+  if (bottleMesh) {
     // Use scroll delta to rotate the cap
-    cupMesh.rotation.y += event.deltaY * 0.01
-    cupMesh.position.y += deltaY // Move up
+    bottleMesh.rotation.y -= event.deltaY * 0.01
+    bottleMesh.position.y -= deltaY // Move up
     renderer.render(scene, camera) // Force update
   }
 }
