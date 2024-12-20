@@ -101,7 +101,7 @@ function createWave(context: any, options: Object) {
     context.fill()
   }
 
-  function resize(width, height) {
+  function resize(width: number, height: number) {
     wave.width = width
     wave.height = height
 
@@ -121,7 +121,7 @@ onMounted(() => {
   if (canvas.value) {
     context = canvas.value.getContext('2d')
 
-    let waves = []
+    let waves: object[] = []
 
     let vw = window.innerWidth
     let vh = window.innerHeight
@@ -160,14 +160,6 @@ onMounted(() => {
     })
 
     waves.push(wave1, wave2, wave3)
-
-    // gsap.to(waves, {
-    //   duration: 5,
-    //   ease: 'sine.inOut',
-    //   repeat: -1,
-    //   repeatDelay: 1,
-    //   yoyo: true
-    // })
 
     gsap.to(wave1, {
       duration: 2,
@@ -216,7 +208,7 @@ onMounted(() => {
           start: 'top top', // when the top of the trigger hits the top of the viewport
           end: 'bottom center', // end after scrolling 500px beyond the start
           scrub: 1, // smooth scrubbing, takes 1 second to "catch up" to the scrollbar
-          markers: true
+          markers: false
         }
       })
       .to(waves, {

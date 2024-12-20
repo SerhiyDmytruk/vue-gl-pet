@@ -28,17 +28,17 @@ const routes = [
       {
         path: 'jelly-simple-obj',
         name: 'Jelly Obj Canvas',
-        component: () => import('@/views/canvas/JellyObjCanvasView.vue')
+        component: () => import('@/views/canvas/JellyObjView.vue')
       },
       {
         path: 'jelly-simple-svg',
         name: 'Jelly SVG Canvas',
-        component: () => import('@/views/canvas/JellySVGCanvasView.vue')
+        component: () => import('@/views/canvas/JellySVGView.vue')
       },
       {
         path: 'canvas-wave',
         name: 'Wave Canvas',
-        component: () => import('@/views/canvas/WaveCanvas.vue')
+        component: () => import('@/views/canvas/Wave.vue')
       }
     ]
   },
@@ -50,27 +50,27 @@ const routes = [
       {
         path: 'webgl-triangle',
         name: 'WebGl Triangle',
-        component: () => import('@/views/webgl/WebGlTriangleView.vue')
+        component: () => import('@/views/webgl/TriangleView.vue')
       },
       {
         path: 'webgl-2-triangle',
         name: 'WebGl Triangle2',
-        component: () => import('@/views/webgl/WebGlTriangle2View.vue')
+        component: () => import('@/views/webgl/Triangle2View.vue')
       },
       {
         path: 'webgl-cube',
         name: 'WebGl Cube',
-        component: () => import('@/views/webgl/WebGlCubeView.vue')
+        component: () => import('@/views/webgl/CubeView.vue')
       },
       {
         path: 'webgl-cube-texture',
         name: 'WebGl Cube Texture',
-        component: () => import('@/views/webgl/WebGlCubeTextureView.vue')
+        component: () => import('@/views/webgl/CubeTextureView.vue')
       },
       {
         path: 'webgl-pyramid-x-trans',
         name: 'WebGl Pyramid XTrans',
-        component: () => import('@/views/webgl/WebGlPyramidXTransView.vue')
+        component: () => import('@/views/webgl/PyramidXTransView.vue')
       }
     ]
   },
@@ -82,22 +82,17 @@ const routes = [
       {
         path: 'threejs-triangle',
         name: 'Three Triangle',
-        component: () => import('@/views/treejs/ThreeTriangleView.vue')
+        component: () => import('@/views/treejs/TriangleView.vue')
       },
       {
         path: 'treejs-pyramid-trans',
         name: 'TreeJs Pyramid Transition',
-        component: () => import('@/views/treejs/TreeJsPyramidXTransView.vue')
-      },
-      {
-        path: 'treejs-bottle',
-        name: 'TreeJs Bottle View',
-        component: () => import('@/views/treejs/WebGlBottleView.vue')
+        component: () => import('@/views/treejs/PyramidXTransView.vue')
       },
       {
         path: 'treejs-bottle-animate',
         name: 'TreeJs Bottle View Animate',
-        component: () => import('@/views/treejs/WebGlBottleAnimateView.vue')
+        component: () => import('@/views/treejs/BottleAnimateView.vue')
       }
     ]
   }
