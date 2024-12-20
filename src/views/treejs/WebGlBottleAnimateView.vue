@@ -18,11 +18,7 @@ let capMesh: THREE.Mesh<
   THREE.Material | THREE.Material[],
   THREE.Object3DEventMap
 > | null = null
-let cupMesh: THREE.Mesh<
-  THREE.BufferGeometry<THREE.NormalBufferAttributes>,
-  THREE.Material | THREE.Material[],
-  THREE.Object3DEventMap
-> | null = null
+
 let bottleMesh: THREE.Mesh<
   THREE.BufferGeometry<THREE.NormalBufferAttributes>,
   THREE.Material | THREE.Material[],
@@ -67,11 +63,6 @@ onMounted(() => {
               }
 
               // Identify and store the cap mesh
-              if (mesh.name === `Cup\\Solid` || mesh.name.includes('cap')) {
-                cupMesh = mesh
-              }
-
-              // Identify and store the cap mesh
               if (mesh.name === `Bottle\\Solid` || mesh.name.includes('cap')) {
                 bottleMesh = mesh
               }
@@ -83,7 +74,7 @@ onMounted(() => {
           scene.add(obj)
         },
         (xhr) => {
-          console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
+          // console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
         },
         (error) => {
           console.error('An error occurred while loading the model:', error)
@@ -104,23 +95,40 @@ onMounted(() => {
   }
 })
 
+let baseLevel: number = 0
+
+function meshObjChange(
+  meshElement: THREE.Mesh<
+    THREE.BufferGeometry<THREE.NormalBufferAttributes>,
+    THREE.Material | THREE.Material[],
+    THREE.Object3DEventMap
+  >,
+  deltaY: number,
+  move: string
+) {
+  if (meshElement) {
+    // Use scroll delta to rotate the cap
+    move == '+' ? (meshElement.rotation.y += deltaY / 4) : (meshElement.rotation.y -= deltaY) // Rotate 45 degrees
+    move == '+' ? (meshElement.position.y += deltaY) : (meshElement.position.y -= deltaY) // Move up
+
+    renderer.render(scene, camera) // Force update
+  }
+}
+
 // Handle Mouse Scroll
 function onScroll(event: WheelEvent) {
   let deltaY = event.deltaY / 10
 
-  if (capMesh) {
-    // Use scroll delta to rotate the cap
-    capMesh.rotation.y = Math.PI / 4 // Rotate 45 degrees
-    capMesh.position.y += deltaY // Move up
-    renderer.render(scene, camera) // Force update
+  baseLevel += deltaY
+
+  if (baseLevel < 0) {
+    baseLevel = 0
+
+    return false
   }
 
-  if (bottleMesh) {
-    // Use scroll delta to rotate the cap
-    bottleMesh.rotation.y -= event.deltaY * 0.01
-    bottleMesh.position.y -= deltaY // Move up
-    renderer.render(scene, camera) // Force update
-  }
+  meshObjChange(capMesh, deltaY, '+')
+  meshObjChange(bottleMesh, deltaY, '-')
 }
 
 // Cleanup on component unmount
@@ -133,7 +141,7 @@ onUnmounted(() => {
 <template>
   <div>
     <div>
-      <h1>Scroll-Controlled Bottle Cap Animation by ThreeJs</h1>
+      <h1>Scroll-Controlled Bottle Cap Animation <br />by ThreeJs</h1>
     </div>
 
     <div ref="canvasContainer" class="canvas-container"></div>
