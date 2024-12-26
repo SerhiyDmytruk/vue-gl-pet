@@ -39,6 +39,11 @@ const routes = [
         path: 'canvas-wave',
         name: 'Wave Canvas',
         component: () => import('@/views/canvas/Wave.vue')
+      },
+      {
+        path: 'jelly-btn-svg',
+        name: 'Jelly Btn',
+        component: () => import('@/views/canvas/JellyBtnView.vue')
       }
     ]
   },
