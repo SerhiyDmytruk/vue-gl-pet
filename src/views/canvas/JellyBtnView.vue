@@ -38,15 +38,13 @@ onMounted(() => {
       ],
       text: '▶',
       canvas: canvas.value,
-      context: ctx,
       wrapperElement: document.body,
       noise: 0
     })
 
-    let touches = []
+    let touches: { x: number; y: number; z: number; force: number }[] = []
 
-    const mousemove = (e) => {
-      console.log('mousemove', e.offsetX, e.offsetY)
+    const mousemove = (e: MouseEvent) => {
       touches = [
         {
           x: e.offsetX,
@@ -57,12 +55,11 @@ onMounted(() => {
       ]
     }
 
-    const mouseout = (e) => {
-      console.log('mouseout')
+    const mouseout = (e: MouseEvent) => {
       touches = []
     }
 
-    const distance = (p1, p2) => {
+    const distance = (p1: object, p2: object) => {
       return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2))
     }
 
@@ -138,21 +135,14 @@ onMounted(() => {
     }
 
     const draw = () => {
-      options.context.clearRect(0, 0, options.canvas.width, options.canvas.height)
+      ctx.clearRect(0, 0, options.canvas.width, options.canvas.height)
       for (let layerIndex = 0; layerIndex < options.layers.length; layerIndex++) {
         const layer = options.layers[layerIndex]
         if (layerIndex === 1) {
           if (touches.length > 0) {
             const gx = touches[0].x
             const gy = touches[0].y
-            layer.color = options.context.createRadialGradient(
-              gx,
-              gy,
-              options.height * 2,
-              gx,
-              gy,
-              0
-            )
+            layer.color = ctx.createRadialGradient(gx, gy, options.height * 2, gx, gy, 0)
             layer.color.addColorStop(0, options.color2)
             layer.color.addColorStop(1, options.color3)
           } else {
@@ -162,12 +152,12 @@ onMounted(() => {
           layer.color = options.color1
         }
         const points = layer.points
-        options.context.fillStyle = layer.color
+        ctx.fillStyle = layer.color
 
-        options.context.beginPath()
-        options.context.moveTo(points[0].x, points[0].y)
+        ctx.beginPath()
+        ctx.moveTo(points[0].x, points[0].y)
         for (let pointIndex = 1; pointIndex < points.length; pointIndex += 1) {
-          options.context.bezierCurveTo(
+          ctx.bezierCurveTo(
             points[(pointIndex + 0) % points.length].cNext.x,
             points[(pointIndex + 0) % points.length].cNext.y,
             points[(pointIndex + 1) % points.length].cPrev.x,
@@ -176,13 +166,13 @@ onMounted(() => {
             points[(pointIndex + 1) % points.length].y
           )
         }
-        options.context.fill()
+        ctx.fill()
       }
-      options.context.fillStyle = options.textColor
-      options.context.font = '100 ' + (options.height - options.padding * 2) + 'px sans-serif'
-      options.context.textAlign = 'center'
-      options.context.textBaseline = 'middle'
-      options.context.fillText(
+      ctx.fillStyle = options.textColor
+      ctx.font = '100 ' + (options.height - options.padding * 2) + 'px sans-serif'
+      ctx.textAlign = 'center'
+      ctx.textBaseline = 'middle'
+      ctx.fillText(
         options.text,
         options.canvas.width / 2,
         options.canvas.height / 2,
@@ -194,33 +184,33 @@ onMounted(() => {
     }
 
     const drawDebug = () => {
-      options.context.fillStyle = 'rgba(255, 255, 255, 0.8)'
-      options.context.fillRect(0, 0, options.canvas.width, options.canvas.height)
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.8)'
+      ctx.fillRect(0, 0, options.canvas.width, options.canvas.height)
       for (let layerIndex = 0; layerIndex < options.layers.length; layerIndex++) {
         const layer = options.layers[layerIndex]
         const points = layer.points
         for (let pointIndex = 0; pointIndex < points.length; pointIndex++) {
           if (layerIndex === 0) {
-            options.context.fillStyle = options.color1
+            ctx.fillStyle = options.color1
           } else {
-            options.context.fillStyle = options.color2
+            ctx.fillStyle = options.color2
           }
           const point = points[pointIndex]
-          options.context.fillRect(point.x, point.y, 1, 1)
-          options.context.fillStyle = '#000'
-          options.context.fillRect(point.cPrev.x, point.cPrev.y, 1, 1)
-          options.context.fillRect(point.cNext.x, point.cNext.y, 1, 1)
-          options.context.strokeStyle = 'rgba(0, 0, 0, 0.33)'
-          options.context.strokeWidth = 0.5
-          options.context.beginPath()
-          options.context.moveTo(point.cPrev.x, point.cPrev.y)
-          options.context.lineTo(point.cNext.x, point.cNext.y)
-          options.context.stroke()
+          ctx?.fillRect(point.x, point.y, 1, 1)
+          ctx.fillStyle = '#000'
+          ctx?.fillRect(point.cPrev.x, point.cPrev.y, 1, 1)
+          ctx?.fillRect(point.cNext.x, point.cNext.y, 1, 1)
+          ctx.strokeStyle = 'rgba(0, 0, 0, 0.33)'
+          ctx.strokeWidth = 0.5
+          ctx?.beginPath()
+          ctx?.moveTo(point.cPrev.x, point.cPrev.y)
+          ctx?.lineTo(point.cNext.x, point.cNext.y)
+          ctx?.stroke()
         }
       }
     }
 
-    const createPoint = (x, y) => {
+    const createPoint = (x: number, y: number) => {
       return {
         x: x,
         y: y,
