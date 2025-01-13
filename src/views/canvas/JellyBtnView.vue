@@ -110,7 +110,7 @@ onMounted(() => {
           const dPrev = distance(point, prev)
           const dNext = distance(point, next)
 
-          const line = {
+          const line: { x: number; y: number } = {
             x: next.x - prev.x,
             y: next.y - prev.y
           }
@@ -135,14 +135,14 @@ onMounted(() => {
     }
 
     const draw = () => {
-      ctx.clearRect(0, 0, options.canvas.width, options.canvas.height)
+      ctx?.clearRect(0, 0, options.canvas.width, options.canvas.height)
       for (let layerIndex = 0; layerIndex < options.layers.length; layerIndex++) {
         const layer = options.layers[layerIndex]
         if (layerIndex === 1) {
           if (touches.length > 0) {
             const gx = touches[0].x
             const gy = touches[0].y
-            layer.color = ctx.createRadialGradient(gx, gy, options.height * 2, gx, gy, 0)
+            layer.color = ctx?.createRadialGradient(gx, gy, options.height * 2, gx, gy, 0)
             layer.color.addColorStop(0, options.color2)
             layer.color.addColorStop(1, options.color3)
           } else {
@@ -154,10 +154,10 @@ onMounted(() => {
         const points = layer.points
         ctx.fillStyle = layer.color
 
-        ctx.beginPath()
-        ctx.moveTo(points[0].x, points[0].y)
+        ctx?.beginPath()
+        ctx?.moveTo(points[0].x, points[0].y)
         for (let pointIndex = 1; pointIndex < points.length; pointIndex += 1) {
-          ctx.bezierCurveTo(
+          ctx?.bezierCurveTo(
             points[(pointIndex + 0) % points.length].cNext.x,
             points[(pointIndex + 0) % points.length].cNext.y,
             points[(pointIndex + 1) % points.length].cPrev.x,
@@ -166,7 +166,7 @@ onMounted(() => {
             points[(pointIndex + 1) % points.length].y
           )
         }
-        ctx.fill()
+        ctx?.fill()
       }
       ctx.fillStyle = options.textColor
       ctx.font = '100 ' + (options.height - options.padding * 2) + 'px sans-serif'
@@ -224,6 +224,7 @@ onMounted(() => {
     const initOrigins = () => {
       options.canvas.width = options.width + options.margin * 2
       options.canvas.height = options.height + options.margin * 2
+
       for (let layerIndex = 0; layerIndex < options.layers.length; layerIndex++) {
         const layer = options.layers[layerIndex]
         const points = []
@@ -234,6 +235,7 @@ onMounted(() => {
         ) {
           points.push(createPoint(x + options.margin, options.margin))
         }
+
         for (let alpha = ~~(options.height * 1.25); alpha >= 0; alpha -= options.gap) {
           const angle = (Math.PI / ~~(options.height * 1.25)) * alpha
           points.push(
@@ -246,6 +248,7 @@ onMounted(() => {
             )
           )
         }
+
         for (
           let x = options.width - ~~(options.height / 2) - 1;
           x >= ~~(options.height / 2);
@@ -253,6 +256,7 @@ onMounted(() => {
         ) {
           points.push(createPoint(x + options.margin, options.margin + options.height))
         }
+
         for (let alpha = 0; alpha <= ~~(options.height * 1.25); alpha += options.gap) {
           const angle = (Math.PI / ~~(options.height * 1.25)) * alpha
           points.push(
@@ -265,6 +269,7 @@ onMounted(() => {
             )
           )
         }
+
         layer.points = points
       }
     }
