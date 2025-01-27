@@ -103,6 +103,11 @@ const routes = [
         path: 'treejs-ballon-animate',
         name: 'TreeJs ballon Animate',
         component: () => import('@/views/treejs/BallonView.vue')
+      },
+      {
+        path: 'bear-animate',
+        name: 'TreeJs Teddies Animate',
+        component: () => import('@/views/treejs/TeddyAnimationView.vue')
       }
     ]
   }
