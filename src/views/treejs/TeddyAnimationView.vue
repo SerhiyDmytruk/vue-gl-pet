@@ -12,6 +12,9 @@ const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true })
 const camera = new THREE.PerspectiveCamera(25, 600 / 600, 0.5, 1000)
 camera.position.set(8, 1, 5)
 
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
+
 const bearMeshArray: THREE.Mesh<
   THREE.BufferGeometry<THREE.NormalBufferAttributes>,
   THREE.Material | THREE.Material[],
@@ -38,7 +41,6 @@ onMounted(() => {
     const controls = new OrbitControls(camera, renderer.domElement)
     controls.enableDamping = true
     controls.enableZoom = false
-    // controls.autoRotate = true
 
     // Load OBJ Model
     new MTLLoader().load('/src/assets/bear/bear.mtl', function (materials) {
@@ -52,9 +54,9 @@ onMounted(() => {
             if ((child as THREE.Mesh).isMesh) {
               const mesh = child as THREE.Mesh
 
-              for (let i = 0; i < 60; i++) {
+              for (let i = 0; i < 30; i++) {
                 const bearMeshClone = mesh.clone()
-                // Випадкове розташування
+
                 bearMeshClone.position.set(
                   Math.random() * 10 - 1,
                   Math.random() * 10 - 1,
@@ -79,22 +81,24 @@ onMounted(() => {
       )
     })
 
+    window.addEventListener('click', onClick)
+
     // Animation Loop
     // eslint-disable-next-line no-inner-declarations
     function animate() {
       controls.update()
       renderer.render(scene, camera)
 
-      bearMeshArray.forEach((bear) => {
+      bearMeshArray.forEach((bear, index) => {
+
         bear.position.y += 0.01; // Регулюй швидкість
         if (bear.position.y > 6) {
           // Перезапуск об'єкта знизу
           bear.position.y = Math.random() * 2 - 4; // Початкова позиція знизу
           bear.position.x = Math.random() * 4 - 2; // Випадкова позиція x
           bear.position.z = Math.random() * 4 - 2; // Випадкова позиція z
+          bear.visible = true;
         }
-
-        // console.log(Math.random())
         bear.rotation.x += Math.random() * 0.01;
         bear.rotation.y += Math.random() * 0.01;
       });
@@ -105,8 +109,30 @@ onMounted(() => {
   }
 })
 
+function onClick(event) {
+
+  const rect = renderer.domElement.getBoundingClientRect();
+  pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+  pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+  raycaster.setFromCamera(pointer, camera);
+
+  // Перевіряємо перетин із ведмедиками
+  const intersects = raycaster.intersectObjects(bearMeshArray, true);
+
+  if (intersects.length > 0) {
+    const clickedBear = intersects[0].object; // Перший перетнутий об'єкт
+    const clickedBearID = clickedBear.id; // Перший перетнутий об'єкт
+
+    bearMeshArray.filter((meshIitem) => {
+      meshIitem.id === clickedBearID ? meshIitem.visible = false : ''
+    })
+  }
+}
+
 // Cleanup on component unmount
 onUnmounted(() => {
+  window.removeEventListener('click', onClick)
   renderer.dispose()
 })
 </script>
