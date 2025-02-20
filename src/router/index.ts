@@ -44,6 +44,11 @@ const routes = [
         path: 'jelly-btn-svg',
         name: 'Jelly Btn',
         component: () => import('@/views/canvas/JellyBtnView.vue')
+      },
+      {
+        path: 'lava-block',
+        name: 'Lava Block',
+        component: () => import('@/views/canvas/LavaView.vue')
       }
     ]
   },
