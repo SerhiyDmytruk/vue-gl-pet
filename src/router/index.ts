@@ -49,6 +49,11 @@ const routes = [
         path: 'lava-block',
         name: 'Lava Block',
         component: () => import('@/views/canvas/LavaView.vue')
+      },
+      {
+        path: 'lava-block-2',
+        name: 'Lava Block 2',
+        component: () => import('@/views/canvas/LavaView2.vue')
       }
     ]
   },
