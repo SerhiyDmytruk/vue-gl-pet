@@ -242,9 +242,6 @@ onUnmounted(() => {
         original link
       </a>
     </div>
-
-    <!-- <section style="height: 10vh"></section> -->
-
     <div class="background">
       <canvas ref="canvas" id="drawOnMe" width="600" height="600"></canvas>
     </div>

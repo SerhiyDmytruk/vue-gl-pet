@@ -21,6 +21,7 @@
     "core-js": "^3.39.0",
     "gl-matrix": "^3.4.3",
     "gsap": "^3.12.5",
+    "gsap-trial": "^3.12.7",
     "pinia": "^2.1.7",
     "three": "^0.170.0",
     "three-obj-mtl-loader": "^1.0.3",
