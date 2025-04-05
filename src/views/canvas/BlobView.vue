@@ -186,7 +186,7 @@ onMounted(() => {
       </svg>
     </div>
 
-    <span>div with borders</span>
+    <span>Blob based on CSS</span>
     <div class="blob-wrapper">
       <div class="blob-div"></div>
     </div>
