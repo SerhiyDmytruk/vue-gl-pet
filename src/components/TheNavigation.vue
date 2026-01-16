@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import router from '../router'
+import { RouterLink } from 'vue-router'
+import router from '../router/'
 
 const routes = router.options.routes
 </script>
@@ -9,11 +10,13 @@ const routes = router.options.routes
     <ul>
       <li v-for="item in routes" :key="item.name">
         <span v-if="item.children">{{ item.name }}</span>
-        <a v-else :href="item.path">{{ item.name }}</a>
+        <RouterLink v-else :to="item.path">{{ item.name }}</RouterLink>
 
         <ul v-if="item.children">
           <li v-for="link in item.children" :key="link.name">
-            <a :href="item.path + '/' + link.path"> {{ link.name }}</a>
+            <RouterLink :to="item.path + '/' + link.path">
+              {{ link.name }}
+            </RouterLink>
           </li>
         </ul>
       </li>

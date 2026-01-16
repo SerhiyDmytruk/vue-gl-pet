@@ -17,6 +17,11 @@ const routes = [
         path: 'jelly-simple-img',
         name: 'Text Animation',
         component: () => import('@/views/animation/TextAnimationView.vue')
+      },
+      {
+        path: '3d-css-slider',
+        name: '3D Slider only CSS',
+        component: () => import('@/views/animation/3DCSSSlider.vue')
       }
     ]
   },
